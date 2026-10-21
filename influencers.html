@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>September 2026 Influencer Analysis | DCT Abu Dhabi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        /* SONER Logo Animation */
+        @keyframes sonerScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes sonerBlip { 0%, 20%, 100% { opacity: 0; } 2%, 15% { opacity: 1; } 3% { transform: scale(1.2); } }
+
+        .soner-logo { display: flex; align-items: center; color: white; font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 300; }
+        .soner-radar { width: 24px; height: 24px; border-radius: 50%; border: 1px solid white; margin: 0 3px; position: relative; background-color: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        .soner-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: sonerScan 4s linear infinite; transform-origin: center; }
+        .soner-scanner::before { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 50%; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)); transform-origin: bottom left; clip-path: polygon(0 0, 100% 0, 0 100%); }
+        .soner-scanner::after { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 1)); transform-origin: left center; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+        .soner-blip { position: absolute; width: 2px; height: 2px; background-color: white; border-radius: 50%; opacity: 0; box-shadow: 0 0 4px white; }
+        .soner-blip:nth-child(1) { top: 25%; left: 30%; animation: sonerBlip 4s 1s infinite; }
+        .soner-blip:nth-child(2) { top: 65%; left: 60%; animation: sonerBlip 4s 2.5s infinite; }
+        .soner-tagline { color: white; font-size: 8px; text-transform: uppercase; font-weight: 500; letter-spacing: 0.5em; margin-left: 10px; opacity: 0.8; }
+
+        :root {
+            --primary: #4285f4;
+            --primary-light: #1a2233;
+            --primary-dark: #8ab4f8;
+            --secondary: #34a853;
+            --warning: #fbbc04;
+            --danger: #ea4335;
+            --gray-100: #1e1e1e;
+            --gray-200: #2d2d2d;
+            --gray-300: #3d3d3d;
+            --gray-400: #4d4d4d;
+            --gray-500: #777777;
+            --gray-600: #a0a0a0;
+            --gray-700: #c0c0c0;
+            --bg-color: #000000;
+            --card-bg: #121212;
+            --section-bg: #181818;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            background: linear-gradient(135deg, #1a73e8, #174ea6);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 600; line-height: 1.2; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px; }
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 40px 0 25px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        .section > h2:first-child { margin-top: 0; }
+        h3 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin: 30px 0 18px;
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .main-section-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 30px;
+            transition: color 0.2s ease;
+        }
+        .main-section-header:hover { color: var(--primary-dark); }
+        .main-section-header:after {
+            content: '\f078';
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+        }
+        .main-section-header.collapsed:after { transform: translateY(-50%) rotate(-90deg); }
+        .main-section-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+            max-height: 9999px;
+            opacity: 1;
+        }
+        .main-section-content.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+
+        .lead { color: #ffffff; font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; }
+        .lead strong { color: var(--primary-dark); }
+        .note { color: var(--gray-600); font-size: 0.85rem; margin-top: 8px; }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(66, 133, 244, 0.3); }
+        .metric-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .metric-label { font-size: 0.95rem; color: #ffffff; line-height: 1.5; }
+        .metric-sublabel { font-size: 0.85rem; color: var(--gray-600); margin-top: 5px; }
+
+        .chart-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid var(--gray-300);
+            position: relative;
+            height: 400px;
+        }
+        .charts-row { display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0; }
+        .charts-row .chart-container { flex: 1; min-width: 300px; margin: 0; transition: all 0.3s ease; }
+        .charts-row .chart-container:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); }
+
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        thead tr { background-color: var(--gray-200); border-bottom: 2px solid var(--primary); }
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-dark);
+            border-right: 1px solid var(--gray-300);
+        }
+        th:last-child { border-right: none; }
+        td { padding: 15px; border-bottom: 1px solid var(--gray-300); border-right: 1px solid var(--gray-300); }
+        td:last-child { border-right: none; }
+        td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: var(--gray-200); }
+        tr.total-row td { font-weight: 700; background-color: var(--gray-100); }
+
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+        .tier-uae { background-color: rgba(234, 67, 53, 0.2); color: #ea4335; }
+        .tier-t1 { background-color: rgba(66, 133, 244, 0.2); color: #4285f4; }
+        .tier-t2 { background-color: rgba(52, 168, 83, 0.2); color: #34a853; }
+        .tier-warn { background-color: rgba(251, 188, 4, 0.2); color: #fbbc04; }
+
+        .positive { color: var(--secondary); font-weight: bold; }
+        .negative { color: var(--danger); font-weight: bold; }
+        .neutral { color: var(--warning); font-weight: bold; }
+
+        .heat-positive-2 { background-color: rgba(52, 168, 83, 0.14); }
+        .heat-positive-4 { background-color: rgba(52, 168, 83, 0.30); }
+        .heat-negative-2 { background-color: rgba(234, 67, 53, 0.14); }
+        .heat-negative-4 { background-color: rgba(234, 67, 53, 0.30); }
+
+        .calc { color: var(--gray-500); font-size: 0.75rem; font-weight: 500; }
+
+        /* Insight cards */
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .quadrant-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .quadrant-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .quadrant-card { display: flex; flex-direction: column; }
+        .quadrant-card .quadrant-action { margin-top: auto; }
+        .quadrant-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+        .quadrant-card.stars { border-color: var(--secondary); background: linear-gradient(135deg, rgba(52, 168, 83, 0.05), var(--card-bg)); }
+        .quadrant-card.premium { border-color: var(--warning); background: linear-gradient(135deg, rgba(251, 188, 4, 0.05), var(--card-bg)); }
+        .quadrant-card.watch { border-color: var(--primary); background: linear-gradient(135deg, rgba(66, 133, 244, 0.05), var(--card-bg)); }
+        .quadrant-card.flagged { border-color: var(--danger); background: linear-gradient(135deg, rgba(234, 67, 53, 0.05), var(--card-bg)); }
+        .quadrant-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .quadrant-header i { font-size: 1.5rem; }
+        .stars .quadrant-header i { color: var(--secondary); }
+        .premium .quadrant-header i { color: var(--warning); }
+        .watch .quadrant-header i { color: var(--primary); }
+        .flagged .quadrant-header i { color: var(--danger); }
+        .quadrant-title { font-weight: 700; font-size: 0.95rem; flex: 1; }
+        .quadrant-description { color: var(--gray-600); font-size: 0.9rem; margin-bottom: 10px; }
+        .quadrant-action { font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; }
+        .stars .quadrant-action { background-color: rgba(52, 168, 83, 0.15); color: var(--secondary); }
+        .premium .quadrant-action { background-color: rgba(251, 188, 4, 0.15); color: var(--warning); }
+        .watch .quadrant-action { background-color: rgba(66, 133, 244, 0.15); color: var(--primary); }
+        .flagged .quadrant-action { background-color: rgba(234, 67, 53, 0.15); color: var(--danger); }
+
+        /* Inconsistency cards */
+        .flagged-market-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .flagged-market-card.minor { border-color: var(--warning); }
+        .flagged-market-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .flagged-market-header h4 { color: #ffffff; margin: 0; font-size: 1.1rem; }
+        .issue-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-300); flex-wrap: wrap; }
+        .issue-row:last-child { border-bottom: none; }
+        .issue-label { font-weight: 600; color: var(--gray-600); min-width: 140px; }
+        .issue-value { font-weight: 600; }
+        .flagged-market-recommendation {
+            background-color: rgba(251, 188, 4, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+
+        ul.plain { list-style: none; }
+        ul.plain li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--gray-300); color: var(--gray-700); }
+        ul.plain li:last-child { border-bottom: none; }
+        ul.plain li i { position: absolute; left: 0; top: 13px; color: var(--primary-dark); font-size: 0.9rem; }
+
+        footer {
+            background-color: var(--gray-100);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--gray-300);
+            color: #ffffff;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .quadrant-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .section { padding: 20px; }
+            .metric-grid { grid-template-columns: 1fr 1fr; }
+            .metric-value { font-size: 1.6rem; }
+            .charts-row .chart-container { min-width: 100%; }
+            .quadrant-grid.cols-3 { grid-template-columns: 1fr; }
+            th, td { padding: 10px; font-size: 0.9rem; }
+        }
+    </style>
+    <style>
+        .rtl { direction: rtl; text-align: right; font-size: 1.05rem; color: #ffffff; margin-bottom: 10px; }
+        .gloss { color: var(--gray-600); font-size: 0.85rem; font-style: italic; }
+        .split-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 25px 0; }
+        .split-card { background-color: var(--card-bg); border: 1px solid var(--gray-300); border-radius: 10px; padding: 25px; }
+        .split-card h4 { font-size: 1.15rem; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+        .split-card .kicker { color: var(--gray-600); font-size: 0.85rem; margin-bottom: 18px; }
+        .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .mini-grid .metric-card { padding: 16px 10px; }
+        .mini-grid .metric-value { font-size: 1.5rem; margin-bottom: 4px; }
+        .export { color: var(--secondary); font-size: 0.75rem; font-weight: 500; }
+        @media screen and (max-width: 900px) {
+            .split-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 480px) {
+            .mini-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
+                <div class="soner-logo">
+                    S<div class="soner-radar">
+                        <div class="soner-scanner"></div>
+                        <div class="soner-blip"></div>
+                        <div class="soner-blip"></div>
+                    </div>NER
+                    <span class="soner-tagline">Strategic Intelligence</span>
+                </div>
+            </div>
+            <h1>September 2026 Influencer Analysis</h1>
+            <p class="subtitle">Zayed National Museum Back to School · DCT Always-On</p>
+            <p>Influencer performance, September 2026 | Figures marked <em>calc</em> are calculated from reported impressions, publications, interactions and EMV | Figures marked <em>export</em> come from the Campaygn Always-On export pulled 20 October</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- EXECUTIVE SUMMARY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-chart-line"></i> Executive Summary</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    DCT's Always-On programme generated <strong>51.03M impressions</strong>, <strong>189 publications</strong> and
+                    <strong>$1.3M in EMV</strong> around Zayed National Museum in September, led by the Creators Immersion Group visit.
+                    The dedicated Back to School campaign (2M impressions, 56 publications) is <strong>largely part of the same
+                    activity</strong>: 51 of the 62 posts in its monitor also appear in the Always-On export, so the two can't be added
+                    together. Its <strong>0.10% interaction rate is a format effect</strong>: 56 of its 62 posts were Stories, and its
+                    Reels and TikToks engaged at 2.16% <span class="calc">calc</span>.
+                    Always-On's results rest on a few creators: <strong>two of 49 delivered half the impressions</strong> and 92% of
+                    the interactions <span class="export">export</span>. Their followers were mostly in India and the US, with only
+                    <strong>4.2% in the UAE</strong> <span class="calc">calc</span>.
+                </p>
+
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">51.03M</div>
+                        <div class="metric-label">Always-On Impressions</div>
+                        <div class="metric-sublabel">54.06M in the 20 Oct export</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">189</div>
+                        <div class="metric-label">Always-On Publications</div>
+                        <div class="metric-sublabel">160 Stories, 29 measured posts <span class="export">export</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">723.06K</div>
+                        <div class="metric-label">Always-On Interactions</div>
+                        <div class="metric-sublabel">1.42% interaction rate <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$1.3M</div>
+                        <div class="metric-label">Always-On EMV</div>
+                        <div class="metric-sublabel">Modelled value, not spend</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">49</div>
+                        <div class="metric-label">Always-On Influencers</div>
+                        <div class="metric-sublabel">Includes all 6 dedicated-monitor creators</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">51 of 62</div>
+                        <div class="metric-label">Dedicated Posts Also in Always-On</div>
+                        <div class="metric-sublabel">So programme totals can't be added <span class="calc">calc</span></div>
+                    </div>
+                </div>
+
+                <div class="quadrant-grid">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-trophy"></i><span class="quadrant-title">Biggest win</span></div>
+                        <p class="quadrant-description">The Creators Immersion Group visit and hosted dinner drove Always-On to 51.03M impressions and 723K interactions.</p>
+                        <div class="quadrant-action">Repeat the immersion format</div>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-circle-exclamation"></i><span class="quadrant-title">Biggest gap</span></div>
+                        <p class="quadrant-description">Dedicated content was 90% Stories (56 of 62 posts), which record no interactions. Its 6 Reels and TikToks engaged at 2.16%, so the low headline rate is about format, not audience.</p>
+                        <div class="quadrant-action">Ask dedicated creators for Reels, not just Stories</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-question-circle"></i><span class="quadrant-title">Biggest unknown</span></div>
+                        <p class="quadrant-description">No fees or costs are reported, so influencer value can only be shown as EMV, not compared with paid media.</p>
+                        <div class="quadrant-action">Report costs alongside EMV</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TWO PROGRAMMES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-users"></i> Two Programmes Side by Side</h2>
+            <div class="main-section-content">
+                <div class="split-grid">
+                    <div class="split-card">
+                        <h4><span class="swatch" style="background:#fa7b17"></span> Dedicated: Back to School</h4>
+                        <p class="kicker">Zayed National Museum family-led storytelling · slide 3, checked against the extra-budget monitor</p>
+                        <div class="mini-grid">
+                            <div class="metric-card"><div class="metric-value">4</div><div class="metric-label">Influencers</div></div>
+                            <div class="metric-card"><div class="metric-value">2M</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric-card"><div class="metric-value">56</div><div class="metric-label">Publications</div></div>
+                            <div class="metric-card"><div class="metric-value">2.08K</div><div class="metric-label">Interactions</div></div>
+                            <div class="metric-card"><div class="metric-value">$25.7K</div><div class="metric-label">EMV</div></div>
+                            <div class="metric-card"><div class="metric-value">4</div><div class="metric-label">Visits</div></div>
+                        </div>
+                    </div>
+                    <div class="split-card">
+                        <h4><span class="swatch" style="background:#4285f4"></span> DCT Always-On</h4>
+                        <p class="kicker">Always-On programme and dedicated creator activations</p>
+                        <div class="mini-grid">
+                            <div class="metric-card"><div class="metric-value">49</div><div class="metric-label">Influencers</div></div>
+                            <div class="metric-card"><div class="metric-value">51.03M</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric-card"><div class="metric-value">189</div><div class="metric-label">Publications</div></div>
+                            <div class="metric-card"><div class="metric-value">723.06K</div><div class="metric-label">Interactions</div></div>
+                            <div class="metric-card"><div class="metric-value">$1.3M</div><div class="metric-label">EMV</div></div>
+                            <div class="metric-card"><div class="metric-value">50</div><div class="metric-label">At immersion event</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>The two programmes overlap</h4><span class="tier-badge tier-uae">Don't add together</span></div>
+                    <div class="issue-row"><span class="issue-label">Dedicated monitor</span><span class="issue-value">62 posts from 6 creators: 2.84M impressions, 2,644 interactions, $34.4K EMV</span></div>
+                    <div class="issue-row"><span class="issue-label">Also in Always-On</span><span class="issue-value">51 posts (all 6 creators): 2.44M impressions, all 2,644 interactions, $29.8K EMV</span></div>
+                    <div class="issue-row"><span class="issue-label">Only in Dedicated</span><span class="issue-value">11 Stories from @sameha.alali: 0.40M impressions, $4.5K EMV</span></div>
+                    <div class="flagged-market-recommendation">Back to School content was largely published by creators also counted in Always-On, so the slide 3 and slide 4 totals double-count. Report each programme on its own, or remove shared posts before combining.</div>
+                </div>
+
+                <h3>Slide 3 Checked Against the Dedicated Monitor</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Measure</th><th class="num">Slide 3</th><th class="num">Monitor: closest match (4 creators)</th><th class="num">Monitor: all 6 creators</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Influencers</td><td class="num">4</td><td class="num">4</td><td class="num">6</td></tr>
+                        <tr><td>Publications</td><td class="num">56</td><td class="num">57</td><td class="num">62</td></tr>
+                        <tr><td>Impressions</td><td class="num">2M</td><td class="num">2.15M</td><td class="num">2.84M</td></tr>
+                        <tr><td>Interactions</td><td class="num">2.08K</td><td class="num heat-negative-2">2,644</td><td class="num">2,644</td></tr>
+                        <tr><td>EMV</td><td class="num">$25.7K</td><td class="num">$26.6K</td><td class="num">$34.4K</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">The closest match is @sameha.alali, @manarmalali, @alia_withlove and @alibinkamal. The first three fit the "three family profiles" and @alibinkamal the "previously contracted" bonus content, but that's inferred. The interaction gap fits an earlier pull, as Reels keep gaining after posting. @eisayo and @mar.the.explorer (5 Stories, 698K impressions) don't seem to be in slide 3. All 62 posts are dated 8–24 September.</p>
+            </div>
+        </section>
+
+        <!-- EFFICIENCY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-bullseye"></i> Content Efficiency</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Because the Dedicated posts sit largely inside Always-On, the programmes are compared <strong>by format</strong>, not
+                    as totals. Dedicated content was <strong>90% Stories</strong> against 85% for Always-On. On measured posts (Reels,
+                    TikTok and feed), Dedicated engaged at <strong>2.16%</strong> against Always-On's 3.05%, but each measured post earned
+                    about 20K impressions against about 900K, because Always-On includes large international creators.
+                </p>
+                <div class="charts-row">
+                    <div class="chart-container" style="height: 320px;"><canvas id="rateChart"></canvas></div>
+                    <div class="chart-container" style="height: 320px;"><canvas id="reachChart"></canvas></div>
+                    <div class="chart-container" style="height: 320px;"><canvas id="emvChart"></canvas></div>
+                </div>
+
+                <h3>Efficiency Scorecard by Format</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Measure <span class="calc">calc</span></th><th class="num">Dedicated monitor</th><th class="num">Always-On export</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Posts</td><td class="num">62</td><td class="num">189</td></tr>
+                        <tr><td>Stories' share of posts</td><td class="num">90.3% (56)</td><td class="num">84.7% (160)</td></tr>
+                        <tr><td>Interaction rate on measured posts</td><td class="num">2.16%</td><td class="num">3.05%</td></tr>
+                        <tr><td>Impressions per measured post</td><td class="num heat-negative-2">20.4K</td><td class="num heat-positive-2">901K</td></tr>
+                        <tr><td>Impressions per Story</td><td class="num">48.6K</td><td class="num">174.6K</td></tr>
+                        <tr><td>EMV per 1,000 impressions, measured posts</td><td class="num">$31.68</td><td class="num">$38.24</td></tr>
+                        <tr><td>EMV per 1,000 impressions, all posts</td><td class="num">$12.09</td><td class="num">$23.65</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Measured posts are Reels, TikTok and feed posts; Stories record no interactions. Dedicated figures come from the extra-budget monitor (6 creators, 62 posts) and Always-On figures from the 20 October export, both as exported. 51 of the Dedicated posts are also among the Always-On posts.</p>
+            </div>
+        </section>
+
+        <!-- FORMAT -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-photo-film"></i> Always-On by Format</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Stories were <strong>85% of Always-On posts</strong> but recorded no interactions, and their impressions are
+                    estimated, not measured. The <strong>29 Reels, Shorts and feed posts</strong> delivered 48% of impressions,
+                    all of the interactions and 78% of EMV <span class="export">export</span>. Their interaction rate was 3.05%,
+                    more than twice the 1.42% blended rate on the slide.
+                </p>
+                <div class="chart-container" style="height: 340px;"><canvas id="formatChart"></canvas></div>
+                <p class="note">Stories are hatched because their impressions and EMV are estimated from follower counts, not measured.</p>
+
+                <h3>Format Scorecard</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Format <span class="export">export</span></th><th class="num">Creators</th><th class="num">Posts</th><th class="num">Impressions</th><th class="num">Share of impressions</th><th class="num">Interactions</th><th class="num">Interaction rate</th><th class="num">EMV</th><th class="num">EMV per 1,000 impressions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Instagram Stories</td><td class="num">43</td><td class="num">160</td><td class="num">27.93M</td><td class="num">51.7%</td><td class="num">Not tracked</td><td class="num heat-negative-4">–</td><td class="num">$279.3K</td><td class="num heat-negative-2">$10.00</td></tr>
+                        <tr><td>Instagram Reels</td><td class="num">13</td><td class="num">15</td><td class="num">15.97M</td><td class="num">29.5%</td><td class="num">423.9K</td><td class="num">2.65%</td><td class="num">$477.7K</td><td class="num">$29.91</td></tr>
+                        <tr><td>YouTube Shorts</td><td class="num">1</td><td class="num">3</td><td class="num">8.65M</td><td class="num">16.0%</td><td class="num">240.1K</td><td class="num">2.78%</td><td class="num">$391.4K</td><td class="num">$45.26</td></tr>
+                        <tr><td>Instagram feed</td><td class="num">8</td><td class="num">9</td><td class="num">1.49M</td><td class="num">2.7%</td><td class="num">132.6K</td><td class="num heat-positive-4">8.92%</td><td class="num">$129.2K</td><td class="num heat-positive-4">$86.90</td></tr>
+                        <tr><td>TikTok</td><td class="num">2</td><td class="num">2</td><td class="num">25.3K</td><td class="num">0.05%</td><td class="num">710</td><td class="num">2.80%</td><td class="num">$1.0K</td><td class="num">$41.02</td></tr>
+                        <tr class="total-row"><td>Total</td><td class="num">49</td><td class="num">189</td><td class="num">54.06M</td><td class="num">100%</td><td class="num">797.3K</td><td class="num">1.47%</td><td class="num">$1.28M</td><td class="num">$23.65</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Interaction rate and EMV per 1,000 impressions are calculated. On every September story row (160), impressions are exactly 20% of the creator's followers, reach is exactly 75% of impressions, and EMV is $0.01 per impression. Reels include one Reel recorded twice, at 5.75M and 5.10M (see Data Inconsistencies): counted once, Reels are 14 posts, 10.87M impressions and 306.5K interactions. Export totals are a later pull than the slide (54.06M impressions and 797.3K interactions, against 51.03M and 723.06K). Creators can post in several formats, so the format counts add up to more than 49.</p>
+            </div>
+        </section>
+
+        <!-- CREATORS & MARKETS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-earth-americas"></i> Always-On Creators &amp; Markets</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Creators based in the <strong>US and India delivered 85% of impressions</strong> from 18 of the 49 creators.
+                    UAE creators made <strong>48% of posts but 11% of impressions</strong>, mostly stories from mid-sized accounts.
+                    Reach is concentrated: <strong>Priya and Sid</strong> (@himynameispriya) alone delivered 30% of impressions and 51% of EMV
+                    <span class="export">export</span>.
+                </p>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">50.5%</div>
+                        <div class="metric-label">Impressions from Top 2 Creators</div>
+                        <div class="metric-sublabel">81.8% from the top 10 <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">92.2%</div>
+                        <div class="metric-label">Interactions from Top 2 Creators</div>
+                        <div class="metric-sublabel">735K of 797K <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">74.8%</div>
+                        <div class="metric-label">EMV from Top 2 Creators</div>
+                        <div class="metric-sublabel">$955.8K of $1.28M <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">45.3%</div>
+                        <div class="metric-label">Top 2 Share, Duplicate Removed</div>
+                        <div class="metric-sublabel">90.8% of interactions, 71.7% of EMV <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">19</div>
+                        <div class="metric-label">Creators with Measured Posts</div>
+                        <div class="metric-sublabel">28 Reels, Shorts, feed and TikTok posts; 30 posted only Stories <span class="export">export</span></div>
+                    </div>
+                </div>
+
+                <div class="chart-container" style="height: 340px;"><canvas id="marketChart"></canvas></div>
+
+                <h3>By Creator Market</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Market <span class="export">export</span></th><th class="num">Creators</th><th class="num">Posts</th><th class="num">Share of posts</th><th class="num">Impressions</th><th class="num">Share of impressions</th><th class="num">Interactions</th><th class="num">EMV</th><th class="num">Impressions per post</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>United States</td><td class="num">6</td><td class="num">21</td><td class="num">11.1%</td><td class="num">23.67M</td><td class="num heat-positive-4">43.8%</td><td class="num">477.1K</td><td class="num">$726.0K</td><td class="num heat-positive-4">1.13M</td></tr>
+                        <tr><td>India</td><td class="num">12</td><td class="num">44</td><td class="num">23.3%</td><td class="num">22.35M</td><td class="num heat-positive-4">41.3%</td><td class="num">307.0K</td><td class="num">$460.4K</td><td class="num heat-positive-2">508K</td></tr>
+                        <tr><td>United Arab Emirates</td><td class="num">19</td><td class="num">91</td><td class="num heat-positive-2">48.1%</td><td class="num">5.69M</td><td class="num">10.5%</td><td class="num">3.3K</td><td class="num">$59.6K</td><td class="num heat-negative-2">62K</td></tr>
+                        <tr><td>Germany</td><td class="num">3</td><td class="num">7</td><td class="num">3.7%</td><td class="num">0.85M</td><td class="num">1.6%</td><td class="num">6.9K</td><td class="num">$14.8K</td><td class="num">122K</td></tr>
+                        <tr><td>United Kingdom</td><td class="num">4</td><td class="num">10</td><td class="num">5.3%</td><td class="num">0.74M</td><td class="num">1.4%</td><td class="num">3.0K</td><td class="num">$10.2K</td><td class="num">74K</td></tr>
+                        <tr><td>Kuwait</td><td class="num">3</td><td class="num">13</td><td class="num">6.9%</td><td class="num">0.45M</td><td class="num">0.8%</td><td class="num">0</td><td class="num">$4.5K</td><td class="num heat-negative-2">35K</td></tr>
+                        <tr><td>Russia</td><td class="num">2</td><td class="num">3</td><td class="num">1.6%</td><td class="num">0.31M</td><td class="num">0.6%</td><td class="num">0</td><td class="num">$3.1K</td><td class="num">104K</td></tr>
+                        <tr class="total-row"><td>Total</td><td class="num">49</td><td class="num">189</td><td class="num">100%</td><td class="num">54.06M</td><td class="num">100%</td><td class="num">797.3K</td><td class="num">$1.28M</td><td class="num">286K</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Market is the creator's home country in Campaygn, not the audience's location. All of the US interactions came from Priya and Sid.</p>
+
+                <h3>Top 10 Creators by Impressions</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Creator <span class="export">export</span></th><th>Market</th><th class="num">Followers</th><th class="num">Posts</th><th>Formats</th><th class="num">Impressions</th><th class="num">Share of impressions</th><th class="num">EMV</th><th class="num">Share of EMV</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Priya and Sid<br><span class="note">@himynameispriya</span></td><td><span class="tier-badge tier-t1">US</span></td><td class="num">8.57M</td><td class="num">11</td><td>3 Shorts, 2 Reels, 1 feed, 5 stories</td><td class="num">16.38M</td><td class="num heat-positive-4">30.3%</td><td class="num">$653.1K</td><td class="num heat-positive-4">51.1%</td></tr>
+                        <tr><td>@soyabeancoupleofficial*</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">59.9K</td><td class="num">7</td><td>2 Reels, 1 feed, 4 stories</td><td class="num">10.92M</td><td class="num heat-positive-4">20.2%</td><td class="num">$302.7K</td><td class="num heat-positive-4">23.7%</td></tr>
+                        <tr><td>Arjun Bijlani<br><span class="note">@arjunbijlani</span></td><td><span class="tier-badge tier-t2">India</span></td><td class="num">8.06M</td><td class="num">3</td><td>3 stories</td><td class="num">4.84M</td><td class="num">8.9%</td><td class="num">$48.4K</td><td class="num">3.8%</td></tr>
+                        <tr><td>SeanDoesMagic<br><span class="note">@seandoesmagic</span></td><td><span class="tier-badge tier-t1">US</span></td><td class="num">7.06M</td><td class="num">2</td><td>2 stories</td><td class="num">2.82M</td><td class="num">5.2%</td><td class="num">$28.2K</td><td class="num">2.2%</td></tr>
+                        <tr><td>KAZI<br><span class="note">@keemokazi</span></td><td><span class="tier-badge tier-t1">US</span></td><td class="num">5.99M</td><td class="num">2</td><td>2 stories</td><td class="num">2.39M</td><td class="num">4.4%</td><td class="num">$23.9K</td><td class="num">1.9%</td></tr>
+                        <tr><td>Ayush Bhandari<br><span class="note">@ayyushbhandari</span></td><td><span class="tier-badge tier-t2">India</span></td><td class="num">4.74M</td><td class="num">2</td><td>2 stories</td><td class="num">1.90M</td><td class="num">3.5%</td><td class="num">$19.0K</td><td class="num">1.5%</td></tr>
+                        <tr><td>Alex Wassabi<br><span class="note">@alexwassabi</span></td><td><span class="tier-badge tier-t1">US</span></td><td class="num">2.99M</td><td class="num">3</td><td>3 stories</td><td class="num">1.79M</td><td class="num">3.3%</td><td class="num">$17.9K</td><td class="num">1.4%</td></tr>
+                        <tr><td>Manar M Alali<br><span class="note">@manarmalali</span></td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">293K</td><td class="num">21</td><td>1 Reel, 20 stories</td><td class="num">1.21M</td><td class="num">2.2%</td><td class="num">$12.6K</td><td class="num">1.0%</td></tr>
+                        <tr><td>Nora &amp; Khalid<br><span class="note">@noraandkhalid</span></td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">2.77M</td><td class="num">2</td><td>2 stories</td><td class="num">1.11M</td><td class="num">2.1%</td><td class="num">$11.1K</td><td class="num">0.9%</td></tr>
+                        <tr><td>Neha Swami<br><span class="note">@nehaswamibijlani</span></td><td><span class="tier-badge tier-t2">India</span></td><td class="num">674K</td><td class="num">7</td><td>7 stories</td><td class="num">0.94M</td><td class="num">1.7%</td><td class="num">$9.4K</td><td class="num">0.7%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">*@soyabeancoupleofficial: the figures include the same Reel twice (5.75M and 5.10M). Counted once, the account has 6 posts, 5.81M impressions (11.9%) and $163.6K EMV, and is still second. The 59.9K follower count also looks low for an account whose 20 September Reel reached 5.75M impressions. See Data Inconsistencies.</p>
+            </div>
+        </section>
+
+        <!-- CREATOR PATTERNS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-people-arrows"></i> Always-On Creator Patterns</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Only <strong>19 of September's 49 creators posted measured content</strong>: 28 Reels, Shorts, feed and TikTok
+                    posts. The other 30 posted only Stories, which made 45.5% of impressions with no measured engagement. Measured
+                    results came almost entirely from <strong>Priya and Sid and @soyabeancoupleofficial</strong>, and the creators'
+                    followers were mostly in <strong>India and the US, with 4.2% in the UAE</strong> <span class="calc">calc</span>.
+                </p>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">30</div>
+                        <div class="metric-label">Story-Only Creators</div>
+                        <div class="metric-sublabel">89 posts, 45.5% of impressions <span class="export">export</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">95.7%</div>
+                        <div class="metric-label">Non-UAE Measured Impressions from 2 Creators</div>
+                        <div class="metric-sublabel">Priya and Sid 68.0%, @soyabeancoupleofficial 27.7% <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">4.2%</div>
+                        <div class="metric-label">Audience in the UAE</div>
+                        <div class="metric-sublabel">6.1% across the GCC · India 30.0%, US 25.6% <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">81.7%</div>
+                        <div class="metric-label">Follower Bases Aged 18–34</div>
+                        <div class="metric-sublabel">66.6% female <span class="calc">calc</span></div>
+                    </div>
+                </div>
+
+                <h3>By Creator Size</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Followers <span class="export">export</span></th><th class="num">Creators</th><th class="num">Share of posts</th><th class="num">Share of impressions</th><th class="num">Stories' share of tier impressions</th><th class="num">Measured posts</th><th class="num">Impressions per measured post</th><th class="num">Measured interaction rate</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Under 100K</td><td class="num">9</td><td class="num">17.6%</td><td class="num">12.4%</td><td class="num">4%</td><td class="num">9</td><td class="num">648.9K*</td><td class="num">2.44%</td></tr>
+                        <tr><td>100–500K</td><td class="num">19</td><td class="num heat-positive-2">47.9%</td><td class="num heat-negative-2">8.6%</td><td class="num">93%</td><td class="num">9</td><td class="num heat-negative-2">32.5K</td><td class="num">4.30%</td></tr>
+                        <tr><td>500K–1M</td><td class="num">8</td><td class="num">15.4%</td><td class="num">8.5%</td><td class="num">83%</td><td class="num">4</td><td class="num">176.6K</td><td class="num">4.02%</td></tr>
+                        <tr><td>1M+</td><td class="num">13</td><td class="num">19.1%</td><td class="num heat-positive-4">70.5%</td><td class="num">59%</td><td class="num">6</td><td class="num heat-positive-4">2.37M†</td><td class="num">3.36%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Story impressions are set at 20% of followers, so large accounts get large Story impressions by construction. *Driven by @soyabeancoupleofficial's 2 measured posts (5.77M); the other 7 average about 10K. †Priya and Sid are the only 1M+ creator with measured posts. With 4–9 measured posts per tier, September can't show a reliable size effect.</p>
+
+                <h3>UAE vs Non-UAE Creators on Measured Content</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Measured (non-Story) content <span class="export">export</span></th><th class="num">UAE</th><th class="num">Non-UAE</th><th class="num">Non-UAE without top 2</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Creators with measured posts</td><td class="num">10</td><td class="num">9</td><td class="num">7</td></tr>
+                        <tr><td>Posts</td><td class="num">12</td><td class="num">16</td><td class="num">8</td></tr>
+                        <tr><td>Impressions</td><td class="num">174K</td><td class="num">20.86M</td><td class="num">898K</td></tr>
+                        <tr><td>Impressions per post</td><td class="num heat-negative-4">14.5K</td><td class="num heat-positive-4">1.30M</td><td class="num heat-positive-2">112.2K</td></tr>
+                        <tr><td>Interactions</td><td class="num">3.3K</td><td class="num">657.4K</td><td class="num">39.9K</td></tr>
+                        <tr><td>Interaction rate</td><td class="num heat-negative-2">1.88%</td><td class="num">3.15%</td><td class="num heat-positive-2">4.45%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">The top 2 are Priya and Sid and @soyabeancoupleofficial. Without them, non-UAE creators earned about 7.7 times the UAE impressions per measured post, but on only 8 and 12 posts. The UAE split is the same whether creators are classed by the Global sheet, by each post's country, or by any post listing the UAE.</p>
+
+                <h3>Every Creator with Measured Posts</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Creator <span class="export">export</span></th><th>Market</th><th class="num">Followers</th><th class="num">Measured posts</th><th class="num">Impressions</th><th class="num">Per post</th><th class="num">Interaction rate</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Priya and Sid<br><span class="note">@himynameispriya</span></td><td><span class="tier-badge tier-t1">US</span></td><td class="num">8.57M</td><td class="num">6</td><td class="num">14.19M</td><td class="num heat-positive-4">2.37M</td><td class="num">3.36%</td></tr>
+                        <tr><td>@soyabeancoupleofficial</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">59.9K</td><td class="num">2</td><td class="num">5.77M</td><td class="num heat-positive-4">2.88M</td><td class="num">2.43%</td></tr>
+                        <tr><td>@rohitsukheja</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">716K</td><td class="num">2</td><td class="num">427K</td><td class="num">213K</td><td class="num">1.77%‡</td></tr>
+                        <tr><td>@kanupriya1707</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">658K</td><td class="num">1</td><td class="num">196K</td><td class="num">196K</td><td class="num heat-positive-4">9.80%‡</td></tr>
+                        <tr><td>@jounes.amiri17</td><td><span class="tier-badge tier-warn">Germany</span></td><td class="num">362K</td><td class="num">1</td><td class="num">109K</td><td class="num">109K</td><td class="num heat-positive-2">6.32%</td></tr>
+                        <tr><td>@kukreja.priyal</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">756K</td><td class="num">1</td><td class="num">84K</td><td class="num">84K</td><td class="num">1.92%</td></tr>
+                        <tr><td>@sameha.alali</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">184K</td><td class="num">2</td><td class="num">61K</td><td class="num">30K</td><td class="num">1.64%</td></tr>
+                        <tr><td>@graceshadrack</td><td><span class="tier-badge tier-warn">UK</span></td><td class="num">163K</td><td class="num">1</td><td class="num">48K</td><td class="num">48K</td><td class="num heat-positive-2">6.19%</td></tr>
+                        <tr><td>@manarmalali</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">295K</td><td class="num">1</td><td class="num">35K</td><td class="num">35K</td><td class="num">2.04%</td></tr>
+                        <tr><td>@sachinsamson</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">93K</td><td class="num">1</td><td class="num">28K</td><td class="num">28K</td><td class="num heat-positive-2">5.20%</td></tr>
+                        <tr><td>@alibinkamal</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">449K</td><td class="num">2</td><td class="num">24K</td><td class="num">12K</td><td class="num">3.57%</td></tr>
+                        <tr><td>@itsivancabatit</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">23K</td><td class="num">1</td><td class="num">16K</td><td class="num">16K</td><td class="num heat-negative-2">0.39%</td></tr>
+                        <tr><td>@myfootprintsinuae</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">34K</td><td class="num">1</td><td class="num">14K</td><td class="num">14K</td><td class="num">1.91%</td></tr>
+                        <tr><td>@rana.alrais</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">107K</td><td class="num">1</td><td class="num">9.7K</td><td class="num">9.7K</td><td class="num heat-negative-2">0.82%</td></tr>
+                        <tr><td>@vl0sca</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">198K</td><td class="num">1</td><td class="num">6.2K</td><td class="num">6.2K</td><td class="num">1.08%</td></tr>
+                        <tr><td>@devdutt09</td><td><span class="tier-badge tier-t2">India</span></td><td class="num">50K</td><td class="num">1</td><td class="num">6.0K</td><td class="num">6.0K</td><td class="num">4.25%</td></tr>
+                        <tr><td>@foodloreuae</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">45K</td><td class="num">1</td><td class="num">3.4K</td><td class="num">3.4K</td><td class="num heat-negative-2">0.80%</td></tr>
+                        <tr><td>@alia_withlove</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">63K</td><td class="num">1</td><td class="num">2.7K</td><td class="num">2.7K</td><td class="num">2.84%</td></tr>
+                        <tr><td>@efronbasics</td><td><span class="tier-badge tier-uae">UAE</span></td><td class="num">6.1K</td><td class="num">1</td><td class="num">1.8K</td><td class="num">1.8K</td><td class="num">6.78%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">‡The collab post credited to both creators has its 19,201 interactions counted once, under @kanupriya1707. Apart from Priya and Sid, every creator rests on 1–2 measured posts, so the high rates from @jounes.amiri17, @graceshadrack and @sachinsamson are leads to test, not proven performers.</p>
+
+                <h3>Who the Creators' Followers Are</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Follower country <span class="calc">calc</span></th><th class="num">Share</th><th>Follower age</th><th class="num">Share</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>India</td><td class="num heat-positive-4">30.0%</td><td>13–17</td><td class="num">7.2%</td></tr>
+                        <tr><td>United States</td><td class="num heat-positive-4">25.6%</td><td>18–24</td><td class="num heat-positive-2">38.2%</td></tr>
+                        <tr><td>United Arab Emirates</td><td class="num heat-negative-2">4.2%</td><td>25–34</td><td class="num heat-positive-2">43.5%</td></tr>
+                        <tr><td>Indonesia</td><td class="num">3.9%</td><td>35–44</td><td class="num">9.2%</td></tr>
+                        <tr><td>United Kingdom</td><td class="num">3.4%</td><td>45–64</td><td class="num">1.8%</td></tr>
+                        <tr><td>Saudi Arabia</td><td class="num heat-negative-2">0.9%</td><td>Female / male</td><td class="num">66.6% / 33.0%</td></tr>
+                        <tr><td>All GCC</td><td class="num heat-negative-2">6.1%</td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Each creator's follower profile from the export's Global sheet, weighted by that creator's September impressions; all 49 creators have this data. The export lists only each creator's main follower countries, so the country shares add up to 85%. These describe who follows the creators, not who saw each post. All cuts in this section count the duplicate Reel once (keeping the later 5.75M row) and the collab post's interactions once: 188 posts, 48.96M impressions and 660.7K interactions.</p>
+            </div>
+        </section>
+
+        <!-- DEEP DIVES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-layer-group"></i> Programme Deep Dives</h2>
+            <div class="main-section-content">
+
+                <h3><i class="fas fa-school"></i> Dedicated: Back to School</h3>
+                <p class="lead">
+                    September supported the Zayed National Museum <strong>Back to School</strong> programme through family-led storytelling.
+                    <strong>Three family profiles</strong> were onboarded to show the museum's educational offering and family activities
+                    through real visits. The month's 56 publications also include content still pending from earlier visits and bonus
+                    content from previously contracted influencers. In the extra-budget monitor, 56 of the 62 posts were Instagram Stories,
+                    with 4 Reels and 2 TikToks; 51 of the posts also appear in the Always-On export.
+                </p>
+
+                <h3><i class="fas fa-star"></i> Top Posts</h3>
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card watch">
+                        <p class="rtl">ساعة الضحى في متحف زايد الوطني</p>
+                        <p class="gloss">"Duha hour (the late-morning hour) at Zayed National Museum"</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <p class="rtl">ورش وفعاليات.. هي فرصة لكبار المواطنين يطلعون من روتين البيت، ينشطون، يلتقون ويشاركون في أجواء جميلة فيها حكايات وذكريات</p>
+                        <p class="gloss">Workshops and events as a chance for senior citizens to break their home routine, stay active, meet and share stories and memories</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <p class="rtl">لا تطوفون popup the grove - وكل تفاصيل الورش بتلقونها على موقع متحف زايد الوطني @znmuae</p>
+                        <p class="gloss">"Don't miss the Grove popup", with all workshop details on the Zayed National Museum website</p>
+                    </div>
+                </div>
+                <p class="note">Captions are shortened; English lines are summaries, not exact translations. Two of the top posts are aimed at older visitors rather than families, so the month's content went beyond the Back to School brief.</p>
+
+                <h3><i class="fas fa-globe"></i> DCT Always-On</h3>
+                <p class="lead">
+                    Zayed National Museum gained strong visibility through DCT Abu Dhabi's Always-On programme and dedicated creator
+                    activations. The highlight was the <strong>Creators Immersion Group event</strong>: 50 local and international
+                    influencers visited the museum, followed by a hosted dinner. Combined activity generated <strong>189 publications
+                    and 51.03M impressions</strong>.
+                </p>
+                <p class="lead">
+                    49 creators posted in September <span class="export">export</span>. The biggest posts were a Reel from @soyabeancoupleofficial on
+                    20 September (5.75M impressions; recorded twice in the export, also at 5.10M) and Priya and Sid's YouTube Shorts and Reels on
+                    20–23 September (2.4M–5.1M each).
+                </p>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-lightbulb"></i> Key Insights</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-bullhorn"></i><span class="quadrant-title">Always-On carries the reach</span></div>
+                        <p class="quadrant-description">51.03M impressions from 189 publications. Most Back to School posts are counted within it.</p>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-handshake"></i><span class="quadrant-title">Group immersion works</span></div>
+                        <p class="quadrant-description">Hosting 50 creators at once, with a dinner, produced the month's biggest wave of content and engagement.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-home"></i><span class="quadrant-title">Dedicated content is focused, not big</span></div>
+                        <p class="quadrant-description">Family storytelling reached 2M impressions with a clear message, but each post reached far fewer people.</p>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-heart-crack"></i><span class="quadrant-title">Dedicated engagement is a format effect</span></div>
+                        <p class="quadrant-description">56 of 62 posts were Stories. The 6 Reels and TikToks engaged at 2.16%, close to Always-On's 3.05% on measured posts.</p>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-film"></i><span class="quadrant-title">Video carries engagement and value</span></div>
+                        <p class="quadrant-description">Reels and Shorts were 10% of Always-On posts but delivered 83% of interactions and 68% of EMV.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-user-large"></i><span class="quadrant-title">Two creators, half the reach</span></div>
+                        <p class="quadrant-description">Priya and Sid and @soyabeancoupleofficial delivered 50% of impressions, 75% of EMV and 92% of interactions. Without Priya and Sid, September would have had about 37.7M impressions.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-location-dot"></i><span class="quadrant-title">UAE creators: volume without reach</span></div>
+                        <p class="quadrant-description">19 UAE creators made 91 posts (48%) but got 11% of impressions and 0.4% of interactions, averaging 62K impressions a post against 1.13M for US creators.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-users-viewfinder"></i><span class="quadrant-title">Audience mostly outside the GCC</span></div>
+                        <p class="quadrant-description">Weighted by September impressions, the creators' followers were 30.0% in India and 25.6% in the US, but 4.2% in the UAE and 6.1% across the GCC.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPPORTUNITIES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-rocket"></i> Opportunities</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-repeat"></i><span class="quadrant-title">Repeat the immersion event</span></div>
+                        <p class="quadrant-description">Plan group creator visits around key museum moments, such as new exhibitions or programmes, to recreate September's spike.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-bullseye"></i><span class="quadrant-title">Brief Always-On on museum priorities</span></div>
+                        <p class="quadrant-description">Always-On delivers the reach. Giving its creators Zayed National Museum messages, such as Back to School and workshops, puts that reach behind current priorities.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-recycle"></i><span class="quadrant-title">Reuse the best family content</span></div>
+                        <p class="quadrant-description">Use the strongest Back to School posts in owned and paid channels, where the story can reach beyond the creators' own audiences.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-user-check"></i><span class="quadrant-title">Set engagement benchmarks</span></div>
+                        <p class="quadrant-description">Check each dedicated creator's typical engagement rate before contracting, so family profiles bring an engaged audience as well as a fit.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-calculator"></i><span class="quadrant-title">Report cost per result</span></div>
+                        <p class="quadrant-description">With fees added, influencer cost per thousand impressions and per interaction can be compared directly with paid media.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-calendar-day"></i><span class="quadrant-title">Fix one pull date</span></div>
+                        <p class="quadrant-description">Pull deck and export figures on the same date, for example the 5th of the next month, so reported and exported numbers match.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-video"></i><span class="quadrant-title">Ask international creators for video</span></div>
+                        <p class="quadrant-description">Most large US and Indian creators posted stories only. Asking for at least one Reel or Short each would add measured reach and engagement.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-language"></i><span class="quadrant-title">Move UAE creators towards Reels</span></div>
+                        <p class="quadrant-description">Use local creators for Reels and Arabic-language storytelling, as the dedicated campaign did, rather than story volume.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-broom"></i><span class="quadrant-title">Clean the export before reporting</span></div>
+                        <p class="quadrant-description">Remove duplicate post URLs, and use interactions ÷ impressions rather than Campaygn's ER, which reaches 219.6% on one post.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-map-location-dot"></i><span class="quadrant-title">Add GCC creators</span></div>
+                        <p class="quadrant-description">Only 4.2% of September's creator followers were in the UAE and 0.9% in Saudi Arabia. If domestic and regional visitors are the goal, add UAE, Saudi and other GCC creators with audiences in those markets.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-flask"></i><span class="quadrant-title">Test the strongest measured performers</span></div>
+                        <p class="quadrant-description">Ask @jounes.amiri17 (6.32%), @graceshadrack (6.19%) and @sachinsamson (5.20%) for more video. Each had one measured post in September, so their rates need more posts to confirm.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-people-group"></i><span class="quadrant-title">Widen the creator bench</span></div>
+                        <p class="quadrant-description">Add more mid-to-large international profiles to each event, so a single creator doesn't account for half the month's results.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THINGS TO WATCH -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-binoculars"></i> Things to Watch</h2>
+            <div class="main-section-content">
+                <ul class="plain">
+                    <li><i class="fas fa-ruler"></i><strong>How interactions are counted.</strong> Campaygn records no interactions for stories, so any programme's interaction rate depends on its share of stories. Compare formats, not programme totals.</li>
+                    <li><i class="fas fa-eye-slash"></i><strong>Estimated story figures.</strong> Every story's impressions are set at 20% of the creator's followers, its reach at 75% of impressions and its EMV at $0.01 per impression. Stories are 52% of September's Always-On impressions.</li>
+                    <li><i class="fas fa-user-large"></i><strong>Reliance on one creator.</strong> Priya and Sid delivered 30% of September impressions and 51% of EMV. Next month's figures will swing on whether creators of that size take part.</li>
+                    <li><i class="fas fa-coins"></i><strong>How EMV is calculated.</strong> The method isn't stated, and EMV is a modelled value, not money spent or earned.</li>
+                    <li><i class="fas fa-hourglass-half"></i><strong>Carry-over content.</strong> The dedicated figures include pending content from earlier visits and bonus content, so September looks bigger than the month's own activity.</li>
+                    <li><i class="fas fa-clock-rotate-left"></i><strong>Figures keep growing.</strong> Reels and Shorts gather views after the month ends. The 20 October export is already 6% above the slide's impressions.</li>
+                    <li><i class="fas fa-calendar-days"></i><strong>One-off events.</strong> The immersion event made September exceptional. October's Always-On figures may fall back without a similar event.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- INCONSISTENCIES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-triangle-exclamation"></i> Data Inconsistencies</h2>
+            <div class="main-section-content">
+                <p class="lead">These figures should be checked with whoever owns the data before they are reused.</p>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>Programmes double-count</h4><span class="tier-badge tier-uae">Overlap</span></div>
+                    <div class="issue-row"><span class="issue-label">Shared posts</span><span class="issue-value">51 of the dedicated monitor's 62 posts are also in the Always-On export</span></div>
+                    <div class="issue-row"><span class="issue-label">Shared creators</span><span class="issue-value">All 6 dedicated-monitor creators are among Always-On's 49</span></div>
+                    <div class="flagged-market-recommendation">Slide 3 and slide 4 can't be added. Ask whether "extra budget" posts should sit in the Always-On monitor at all.</div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>Slide and export figures differ</h4><span class="tier-badge tier-uae">Different pull dates</span></div>
+                    <div class="issue-row"><span class="issue-label">Impressions</span><span class="issue-value">51.03M on the slide, 54.06M in the export (+6%)</span></div>
+                    <div class="issue-row"><span class="issue-label">Interactions</span><span class="issue-value">723.06K on the slide, 797.31K in the export (+10%)</span></div>
+                    <div class="issue-row"><span class="issue-label">Matching</span><span class="issue-value">49 influencers, 189 publications and $1.3M EMV match</span></div>
+                    <div class="flagged-market-recommendation">Updated figures have been requested. Until they arrive, the headline KPIs use the slide figures and the breakdowns use the export. The duplicate below accounts for part of the gap: without it, the export's interactions (679.9K) are below the slide's.</div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>One Reel counted twice</h4><span class="tier-badge tier-uae">Duplicate</span></div>
+                    <div class="issue-row"><span class="issue-label">@soyabeancoupleofficial</span><span class="issue-value">reel/DdgxWSuxv-G appears twice on 20 September, at 5.75M and 5.10M impressions</span></div>
+                    <div class="issue-row"><span class="issue-label">Duplicate removed</span><span class="issue-value">188 posts, 48.96M impressions, 679.9K interactions, $1.14M EMV <span class="calc">calc</span></span></div>
+                    <div class="flagged-market-recommendation">This looks like two snapshots of one post. The slide's 189 publications match the export with the duplicate, so the slide probably includes it. The conclusions about format, markets and concentration hold either way.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Collab post credited to two creators</h4><span class="tier-badge tier-warn">Possible double count</span></div>
+                    <div class="issue-row"><span class="issue-label">23 September</span><span class="issue-value">p/DdoMBBgFwmS appears under @kanupriya1707 and @rohitsukheja, with identical interactions (19,201)</span></div>
+                    <div class="flagged-market-recommendation">Counting the post for each creator is fine, but its interactions are probably counted twice.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Campaygn engagement rate unreliable</h4><span class="tier-badge tier-warn">Don't reuse</span></div>
+                    <div class="issue-row"><span class="issue-label">ER</span><span class="issue-value">219.6% on the later row of the duplicate Reel (Post sheet row 40: 5,749,644 impressions, 131,554 interactions), against 2.3% from those figures</span></div>
+                    <div class="flagged-market-recommendation">This dashboard uses interactions ÷ impressions instead of Campaygn's ER.</div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>Follower count looks wrong for a top creator</h4><span class="tier-badge tier-uae">Check in Campaygn</span></div>
+                    <div class="issue-row"><span class="issue-label">@soyabeancoupleofficial</span><span class="issue-value">59.9K followers, but its 20 September Reel reached 5.75M impressions</span></div>
+                    <div class="flagged-market-recommendation">The profile may be linked to the wrong account, or the follower count may be out of date.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>More visitors at the event than creators who posted</h4><span class="tier-badge tier-warn">Unexplained</span></div>
+                    <div class="issue-row"><span class="issue-label">Always-On</span><span class="issue-value">50 visited for the Creators Immersion Group event, 49 posted in September <span class="export">export</span></span></div>
+                    <div class="flagged-market-recommendation">Both can be right if one visitor hasn't posted yet or posted in October. It's worth saying so on the slide.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>No cost data</h4><span class="tier-badge tier-warn">Gap</span></div>
+                    <div class="issue-row"><span class="issue-label">Export</span><span class="issue-value">Total Cost is €0 and ROI is 0 for every influencer</span></div>
+                    <div class="flagged-market-recommendation">Add fees in Campaygn so cost per result can be reported.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Four influencers, three families, six in the monitor</h4><span class="tier-badge tier-warn">Partly explained</span></div>
+                    <div class="issue-row"><span class="issue-label">Slide 3</span><span class="issue-value">4 influencers reported, 3 family profiles onboarded</span></div>
+                    <div class="issue-row"><span class="issue-label">Monitor</span><span class="issue-value">6 creators; the closest match to slide 3 is 4 of them (57 posts, 2.15M impressions)</span></div>
+                    <div class="flagged-market-recommendation">The fourth looks like @alibinkamal, a previously contracted creator. @eisayo and @mar.the.explorer appear in the monitor but not, it seems, on the slide. Confirm with the agency.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Four visits, three families</h4><span class="tier-badge tier-warn">Unexplained</span></div>
+                    <div class="issue-row"><span class="issue-label">Dedicated</span><span class="issue-value">4 visits in September for 3 onboarded families</span></div>
+                    <div class="flagged-market-recommendation">Either one family visited twice or a visit by an earlier influencer is included.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Interaction rates far apart</h4><span class="tier-badge tier-t2">Explained: format mix</span></div>
+                    <div class="issue-row"><span class="issue-label">Headline</span><span class="issue-value">0.10% dedicated against 1.42% Always-On <span class="calc">calc</span></span></div>
+                    <div class="issue-row"><span class="issue-label">Measured posts</span><span class="issue-value">2.16% dedicated (6 posts) against 3.05% Always-On (29 posts) <span class="calc">calc</span></span></div>
+                    <div class="flagged-market-recommendation">Stories record no interactions in Campaygn, and 90% of dedicated posts were Stories. The gap is about format, not audience.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHOD -->
+        <section class="section">
+            <h2 class="main-section-header collapsed"><i class="fas fa-circle-info"></i> Method &amp; Notes</h2>
+            <div class="main-section-content collapsed">
+                <ul class="plain">
+                    <li><i class="fas fa-calculator"></i>Figures marked <em>calc</em> are calculated from reported impressions, publications, interactions, EMV and influencer counts.</li>
+                    <li><i class="fas fa-file-excel"></i>Figures marked <em>export</em> come from DCT_Zayed_National_Museum_2026_YTD.xlsx, the Campaygn Always-On monitor (37261), pulled 20 October 2026. The export covers January to September, but only the 189 posts dated September are used. Creator follower countries, ages and gender come from the export's Global sheet, weighted by each creator's September impressions.</li>
+                    <li><i class="fas fa-file-powerpoint"></i>Headline and programme figures come from Influencers Report - September 2026.pptx.</li>
+                    <li><i class="fas fa-file-excel"></i>Dedicated (Back to School) figures are checked against Zayed_National_Museum_2026_EXTRA_BUDGET__Influencers_.xlsx: 62 posts from 6 creators, 8–24 September 2026. 51 of its posts also appear in the Always-On export, so programme totals aren't combined.</li>
+                    <li><i class="fas fa-image"></i>Top posts are shown by caption only. Post images and per-post results weren't available.</li>
+                    <li><i class="fas fa-ban"></i>No costs or fees are reported, so there are no cost-per-result figures.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p style="margin: 0; color: var(--gray-700); font-size: 0.9rem;">© 2026 Research & Insights Unit | Strategic Marketing & Communications | Department of Culture and Tourism – Abu Dhabi</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.main-section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+                const content = this.nextElementSibling;
+                if (content && content.classList.contains('main-section-content')) {
+                    content.classList.toggle('collapsed');
+                }
+            });
+        });
+
+        if (window['chartjs-plugin-annotation']) Chart.register(window['chartjs-plugin-annotation']);
+
+        // Draw charts once Inter has loaded, so axis labels are measured with the right font
+        document.fonts.ready.then(() => {
+
+        Chart.defaults.font.family = 'Inter, sans-serif';
+        Chart.defaults.color = '#c0c0c0';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) Chart.defaults.animation = false;
+
+        const DED = '#fa7b17';
+        const AON = '#4285f4';
+        const GREY = '#777777';
+
+        // Diagonal hatch for estimated (modelled) figures
+        function hatch(base, line) {
+            const c = document.createElement('canvas');
+            c.width = c.height = 10;
+            const g = c.getContext('2d');
+            g.fillStyle = base;
+            g.fillRect(0, 0, 10, 10);
+            g.strokeStyle = line;
+            g.lineWidth = 2;
+            g.beginPath();
+            g.moveTo(0, 10); g.lineTo(10, 0);
+            g.moveTo(-5, 5); g.lineTo(5, -5);
+            g.moveTo(5, 15); g.lineTo(15, 5);
+            g.stroke();
+            return g.createPattern(c, 'repeat');
+        }
+
+        // Writes each dataset's valueText on its bars. Stacked segments too narrow for their label
+        // are labelled to the right of the bar, in the segment's colour.
+        const valueLabels = {
+            id: 'valueLabels',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                const horizontal = chart.options.indexAxis === 'y';
+                const stacked = !!chart.options.scales.x.stacked;
+                chart.data.datasets.forEach((ds, di) => {
+                    const meta = chart.getDatasetMeta(di);
+                    if (!ds.valueText || meta.hidden) return;
+                    meta.data.forEach((bar, i) => {
+                        const text = ds.valueText[i];
+                        if (!text) return;
+                        const { x, y, base } = bar.getProps(['x', 'y', 'base'], true);
+                        ctx.save();
+                        ctx.font = '600 12px Inter, sans-serif';
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
+                        ctx.textBaseline = 'middle';
+                        let px, py;
+                        if (horizontal && stacked) {
+                            if (Math.abs(x - base) >= ctx.measureText(text).width + 12) {
+                                ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center'; px = (x + base) / 2; py = y;
+                            } else {
+                                ctx.fillStyle = ds.labelColor || '#ffffff'; ctx.textAlign = 'left'; px = chart.chartArea.right + 6; py = y;
+                            }
+                        } else if (horizontal) {
+                            ctx.fillStyle = '#ffffff'; ctx.textAlign = 'left'; px = x + 6; py = y;
+                        } else {
+                            ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; px = x; py = y - 4;
+                        }
+                        ctx.strokeText(text, px, py);
+                        ctx.fillText(text, px, py);
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+        Chart.register(valueLabels);
+
+        function baseOptions(title, opts = {}) {
+            // Only the value axis gets a custom tick format; the category axis keeps its labels
+            const valueTicks = { color: '#c0c0c0' };
+            if (opts.tick) valueTicks.callback = opts.tick;
+            const catTicks = { color: '#c0c0c0' };
+            const valueAxis = { grid: { display: true }, ticks: valueTicks, beginAtZero: true, stacked: !!opts.stacked };
+            const catAxis = { grid: { display: false }, ticks: catTicks, stacked: !!opts.stacked };
+            if (opts.max) valueAxis.max = opts.max;
+            if (opts.grace) valueAxis.grace = opts.grace;
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: { left: 12, right: opts.padRight || 12 } },
+                indexAxis: opts.horizontal ? 'y' : 'x',
+                plugins: {
+                    title: { display: true, text: title, color: '#8ab4f8', font: { size: 15, weight: 'bold' }, padding: { bottom: opts.subtitle ? 4 : 16 } },
+                    subtitle: { display: !!opts.subtitle, text: opts.subtitle || '', color: '#a0a0a0', font: { size: 12 }, padding: { bottom: 14 } },
+                    legend: { display: !!opts.legend, position: 'top', labels: { color: '#ffffff', font: { size: 12 }, boxWidth: 14 } },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                        titleColor: '#8ab4f8',
+                        bodyColor: '#ffffff',
+                        callbacks: opts.tooltip ? { label: opts.tooltip } : {}
+                    }
+                },
+                scales: opts.horizontal ? { x: valueAxis, y: catAxis } : { x: catAxis, y: valueAxis }
+            };
+        }
+
+        function barDataset(values, colors, label, valueText) {
+            return {
+                label: label || '',
+                data: values,
+                backgroundColor: colors,
+                borderRadius: 4,
+                borderSkipped: false,
+                maxBarThickness: 36,
+                valueText
+            };
+        }
+
+        // 2-4. Two-bar comparisons, ratio in the subtitle
+        function compare(id, title, subtitle, values, text, tick, detail) {
+            new Chart(document.getElementById(id), {
+                type: 'bar',
+                data: { labels: ['Dedicated', 'Always-On'], datasets: [barDataset(values, [DED, AON], title, text)] },
+                options: baseOptions(title, {
+                    subtitle, tick, grace: '12%',
+                    tooltip: c => `${c.label}: ${text[c.dataIndex]} (${detail[c.dataIndex]})`
+                })
+            });
+        }
+        compare('rateChart', 'Interaction rate, measured posts', 'Reels, TikTok and feed only · calc', [2.16, 3.05], ['2.16%', '3.05%'],
+            v => v + '%', ['2,644 interactions ÷ 122.4K impressions (6 posts)', '797.3K ÷ 26.13M (29 posts)']);
+        compare('reachChart', 'Impressions per measured post', 'Always-On 44× Dedicated · calc', [20400, 901000], ['20.4K', '901K'],
+            v => (v / 1000) + 'K', ['122.4K ÷ 6 posts', '26.13M ÷ 29 posts']);
+        compare('emvChart', "Stories' share of posts", 'Stories record no interactions · calc', [90.3, 84.7], ['90.3%', '84.7%'],
+            v => v + '%', ['56 of 62 posts', '160 of 189 posts']);
+
+        // 5. Stories vs video & feed (100% stacked); Stories hatched because they are estimated
+        (() => {
+            const counts = {
+                Posts: ['160', '29', '189'],
+                Impressions: ['27.93M', '26.13M', '54.06M'],
+                EMV: ['$279.3K', '$999.3K', '$1.28M'],
+                Interactions: ['0', '797.3K', '797.3K']
+            };
+            const stories = barDataset([84.7, 51.7, 21.8, 0], hatch('#5a5a5a', '#8a8a8a'), 'Stories (estimated)', ['84.7%', '51.7%', '21.8%', '0%']);
+            stories.labelColor = '#a0a0a0';
+            new Chart(document.getElementById('formatChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Posts', 'Impressions', 'EMV', 'Interactions'],
+                    datasets: [stories, barDataset([15.3, 48.3, 78.2, 100], AON, 'Reels, Shorts, feed & TikTok', ['15.3%', '48.3%', '78.2%', '100%'])]
+                },
+                options: baseOptions('Stories: 85% of Always-On posts', {
+                    horizontal: true, stacked: true, legend: true, max: 100, padRight: 40,
+                    subtitle: 'but 22% of EMV and no interactions',
+                    tick: v => v + '%',
+                    tooltip: c => `${c.dataset.label}: ${counts[c.label][c.datasetIndex]} of ${counts[c.label][2]} (${c.parsed.x}%)`
+                })
+            });
+        })();
+
+        // 6. Share of posts vs share of impressions by creator market, sorted by impressions
+        (() => {
+            const posts = ['21', '44', '91', '33'];
+            const impr = ['23.67M', '22.35M', '5.69M', '2.35M'];
+            new Chart(document.getElementById('marketChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['United States', 'India', 'UAE', 'Other markets'],
+                    datasets: [
+                        barDataset([11.1, 23.3, 48.1, 17.5], GREY, 'Share of posts', ['11.1%', '23.3%', '48.1%', '17.5%']),
+                        barDataset([43.8, 41.3, 10.5, 4.4], AON, 'Share of impressions', ['43.8%', '41.3%', '10.5%', '4.4%'])
+                    ]
+                },
+                options: baseOptions('UAE creators: 48% of posts', {
+                    horizontal: true, legend: true, grace: '10%',
+                    subtitle: 'but 11% of impressions · Always-On',
+                    tick: v => v + '%',
+                    tooltip: c => c.datasetIndex === 0
+                        ? `Share of posts: ${posts[c.dataIndex]} of 189 (${c.parsed.x}%)`
+                        : `Share of impressions: ${impr[c.dataIndex]} of 54.06M (${c.parsed.x}%)`
+                })
+            });
+        })();
+        });
+    </script>
+</body>
+</html>

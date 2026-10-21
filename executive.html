@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>September 2026 Executive Summary | DCT Abu Dhabi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        /* SONER Logo Animation */
+        @keyframes sonerScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes sonerBlip { 0%, 20%, 100% { opacity: 0; } 2%, 15% { opacity: 1; } 3% { transform: scale(1.2); } }
+
+        .soner-logo { display: flex; align-items: center; color: white; font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 300; }
+        .soner-radar { width: 24px; height: 24px; border-radius: 50%; border: 1px solid white; margin: 0 3px; position: relative; background-color: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        .soner-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: sonerScan 4s linear infinite; transform-origin: center; }
+        .soner-scanner::before { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 50%; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)); transform-origin: bottom left; clip-path: polygon(0 0, 100% 0, 0 100%); }
+        .soner-scanner::after { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 1)); transform-origin: left center; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+        .soner-blip { position: absolute; width: 2px; height: 2px; background-color: white; border-radius: 50%; opacity: 0; box-shadow: 0 0 4px white; }
+        .soner-blip:nth-child(1) { top: 25%; left: 30%; animation: sonerBlip 4s 1s infinite; }
+        .soner-blip:nth-child(2) { top: 65%; left: 60%; animation: sonerBlip 4s 2.5s infinite; }
+        .soner-tagline { color: white; font-size: 8px; text-transform: uppercase; font-weight: 500; letter-spacing: 0.5em; margin-left: 10px; opacity: 0.8; }
+
+        :root {
+            --primary: #4285f4;
+            --primary-light: #1a2233;
+            --primary-dark: #8ab4f8;
+            --secondary: #34a853;
+            --warning: #fbbc04;
+            --danger: #ea4335;
+            --gray-100: #1e1e1e;
+            --gray-200: #2d2d2d;
+            --gray-300: #3d3d3d;
+            --gray-400: #4d4d4d;
+            --gray-500: #777777;
+            --gray-600: #a0a0a0;
+            --gray-700: #c0c0c0;
+            --bg-color: #000000;
+            --card-bg: #121212;
+            --section-bg: #181818;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            background: linear-gradient(135deg, #1a73e8, #174ea6);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 600; line-height: 1.2; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px; }
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 40px 0 25px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        .section > h2:first-child { margin-top: 0; }
+        h3 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin: 30px 0 18px;
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .main-section-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 30px;
+            transition: color 0.2s ease;
+        }
+        .main-section-header:hover { color: var(--primary-dark); }
+        .main-section-header:after {
+            content: '\f078';
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+        }
+        .main-section-header.collapsed:after { transform: translateY(-50%) rotate(-90deg); }
+        .main-section-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+            max-height: 9999px;
+            opacity: 1;
+        }
+        .main-section-content.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+
+        .lead { color: #ffffff; font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; }
+        .lead strong { color: var(--primary-dark); }
+        .note { color: var(--gray-600); font-size: 0.85rem; margin-top: 8px; }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(66, 133, 244, 0.3); }
+        .metric-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .metric-label { font-size: 0.95rem; color: #ffffff; line-height: 1.5; }
+        .metric-sublabel { font-size: 0.85rem; color: var(--gray-600); margin-top: 5px; }
+
+        .chart-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid var(--gray-300);
+            position: relative;
+            height: 400px;
+        }
+        .charts-row { display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0; }
+        .charts-row .chart-container { flex: 1; min-width: 300px; margin: 0; transition: all 0.3s ease; }
+        .charts-row .chart-container:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); }
+
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        thead tr { background-color: var(--gray-200); border-bottom: 2px solid var(--primary); }
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-dark);
+            border-right: 1px solid var(--gray-300);
+        }
+        th:last-child { border-right: none; }
+        td { padding: 15px; border-bottom: 1px solid var(--gray-300); border-right: 1px solid var(--gray-300); }
+        td:last-child { border-right: none; }
+        td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: var(--gray-200); }
+        tr.total-row td { font-weight: 700; background-color: var(--gray-100); }
+
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+        .tier-uae { background-color: rgba(234, 67, 53, 0.2); color: #ea4335; }
+        .tier-t1 { background-color: rgba(66, 133, 244, 0.2); color: #4285f4; }
+        .tier-t2 { background-color: rgba(52, 168, 83, 0.2); color: #34a853; }
+        .tier-warn { background-color: rgba(251, 188, 4, 0.2); color: #fbbc04; }
+
+        .positive { color: var(--secondary); font-weight: bold; }
+        .negative { color: var(--danger); font-weight: bold; }
+        .neutral { color: var(--warning); font-weight: bold; }
+
+        .heat-positive-2 { background-color: rgba(52, 168, 83, 0.14); }
+        .heat-positive-4 { background-color: rgba(52, 168, 83, 0.30); }
+        .heat-negative-2 { background-color: rgba(234, 67, 53, 0.14); }
+        .heat-negative-4 { background-color: rgba(234, 67, 53, 0.30); }
+
+        .calc { color: var(--gray-500); font-size: 0.75rem; font-weight: 500; }
+
+        /* Insight cards */
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .quadrant-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .quadrant-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .quadrant-card { display: flex; flex-direction: column; }
+        .quadrant-card .quadrant-action { margin-top: auto; }
+        .quadrant-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+        .quadrant-card.stars { border-color: var(--secondary); background: linear-gradient(135deg, rgba(52, 168, 83, 0.05), var(--card-bg)); }
+        .quadrant-card.premium { border-color: var(--warning); background: linear-gradient(135deg, rgba(251, 188, 4, 0.05), var(--card-bg)); }
+        .quadrant-card.watch { border-color: var(--primary); background: linear-gradient(135deg, rgba(66, 133, 244, 0.05), var(--card-bg)); }
+        .quadrant-card.flagged { border-color: var(--danger); background: linear-gradient(135deg, rgba(234, 67, 53, 0.05), var(--card-bg)); }
+        .quadrant-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .quadrant-header i { font-size: 1.5rem; }
+        .stars .quadrant-header i { color: var(--secondary); }
+        .premium .quadrant-header i { color: var(--warning); }
+        .watch .quadrant-header i { color: var(--primary); }
+        .flagged .quadrant-header i { color: var(--danger); }
+        .quadrant-title { font-weight: 700; font-size: 0.95rem; flex: 1; }
+        .quadrant-description { color: var(--gray-600); font-size: 0.9rem; margin-bottom: 10px; }
+        .quadrant-action { font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; }
+        .stars .quadrant-action { background-color: rgba(52, 168, 83, 0.15); color: var(--secondary); }
+        .premium .quadrant-action { background-color: rgba(251, 188, 4, 0.15); color: var(--warning); }
+        .watch .quadrant-action { background-color: rgba(66, 133, 244, 0.15); color: var(--primary); }
+        .flagged .quadrant-action { background-color: rgba(234, 67, 53, 0.15); color: var(--danger); }
+
+        /* Inconsistency cards */
+        .flagged-market-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .flagged-market-card.minor { border-color: var(--warning); }
+        .flagged-market-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .flagged-market-header h4 { color: #ffffff; margin: 0; font-size: 1.1rem; }
+        .issue-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-300); flex-wrap: wrap; }
+        .issue-row:last-child { border-bottom: none; }
+        .issue-label { font-weight: 600; color: var(--gray-600); min-width: 140px; }
+        .issue-value { font-weight: 600; }
+        .flagged-market-recommendation {
+            background-color: rgba(251, 188, 4, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+
+        ul.plain { list-style: none; }
+        ul.plain li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--gray-300); color: var(--gray-700); }
+        ul.plain li:last-child { border-bottom: none; }
+        ul.plain li i { position: absolute; left: 0; top: 13px; color: var(--primary-dark); font-size: 0.9rem; }
+
+        footer {
+            background-color: var(--gray-100);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--gray-300);
+            color: #ffffff;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .quadrant-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .section { padding: 20px; }
+            .metric-grid { grid-template-columns: 1fr 1fr; }
+            .metric-value { font-size: 1.6rem; }
+            .charts-row .chart-container { min-width: 100%; }
+            .quadrant-grid.cols-3 { grid-template-columns: 1fr; }
+            th, td { padding: 10px; font-size: 0.9rem; }
+        }
+    </style>
+    <style>
+        .rtl { direction: rtl; text-align: right; font-size: 1.05rem; color: #ffffff; margin-bottom: 10px; }
+        .gloss { color: var(--gray-600); font-size: 0.85rem; font-style: italic; }
+        code { font-family: ui-monospace, Menlo, monospace; font-size: 0.85em; color: var(--gray-700); background-color: var(--gray-200); padding: 1px 5px; border-radius: 4px; }
+        .split-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 25px 0; }
+        .split-card { background-color: var(--card-bg); border: 1px solid var(--gray-300); border-radius: 10px; padding: 25px; }
+        .split-card h4 { font-size: 1.15rem; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+        .split-card .kicker { color: var(--gray-600); font-size: 0.85rem; margin-bottom: 18px; }
+        .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .mini-grid .metric-card { padding: 16px 10px; }
+        .mini-grid .metric-value { font-size: 1.5rem; margin-bottom: 4px; }
+        .export { color: var(--secondary); font-size: 0.75rem; font-weight: 500; }
+        @media screen and (max-width: 900px) {
+            .split-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 480px) {
+            .mini-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .conf { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; vertical-align: middle; }
+        .conf.ok { background-color: rgba(52, 168, 83, 0.18); color: #34a853; }
+        .conf.est { background-color: rgba(251, 188, 4, 0.18); color: #fbbc04; }
+        .conf.deck { background-color: rgba(160, 160, 160, 0.18); color: #c0c0c0; }
+        .metric-card .conf { margin-top: 10px; }
+        .metric-grid.kpi-8 { grid-template-columns: repeat(4, 1fr); }
+        @media screen and (max-width: 900px) { .metric-grid.kpi-8 { grid-template-columns: 1fr 1fr; } }
+        .conf-legend { display: flex; flex-wrap: wrap; gap: 18px; color: var(--gray-600); font-size: 0.85rem; margin-bottom: 5px; }
+        .journey { display: flex; align-items: stretch; gap: 10px; margin: 25px 0; }
+        .journey .step { flex: 1; background-color: var(--card-bg); border: 1px solid var(--gray-300); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+        .journey .step-label { color: var(--primary-dark); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.06em; }
+        .journey .step-rows div { padding: 3px 0; color: var(--gray-700); }
+        .journey .step-rows strong { color: #ffffff; font-size: 1.2rem; }
+        .journey .step-note { margin-top: auto; color: var(--gray-600); font-size: 0.8rem; border-top: 1px solid var(--gray-300); padding-top: 8px; }
+        .journey .arrow { display: flex; align-items: center; color: var(--gray-500); }
+        .link-card { display: flex; flex-direction: column; background-color: var(--card-bg); border: 2px solid var(--gray-300); border-radius: 10px; padding: 20px; color: #ffffff; text-decoration: none; transition: border-color 0.2s ease; }
+        .link-card:hover { border-color: var(--primary); }
+        .link-card.static:hover { border-color: var(--gray-300); }
+        .link-card .quadrant-header i { color: var(--primary-dark); font-size: 1.3rem; }
+        .link-go { margin-top: auto; color: var(--primary-dark); font-weight: 600; font-size: 0.85rem; }
+        @media screen and (max-width: 900px) {
+            .journey { flex-direction: column; }
+            .journey .arrow { justify-content: center; transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
+                <div class="soner-logo">
+                    S<div class="soner-radar">
+                        <div class="soner-scanner"></div>
+                        <div class="soner-blip"></div>
+                        <div class="soner-blip"></div>
+                    </div>NER
+                    <span class="soner-tagline">Strategic Intelligence</span>
+                </div>
+            </div>
+            <h1>September 2026 Digital Marketing: Executive Summary</h1>
+            <p class="subtitle">Zayed National Museum · Website · Paid Media · Influencers · Social · Email</p>
+            <p>For leadership | No targets are set yet, so results are compared with benchmarks and between channels | Every headline figure carries a confidence mark</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- AT A GLANCE -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-gauge-high"></i> September at a Glance</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    The museum welcomed <strong>71,476 visitors</strong> in September. Paid campaigns <strong>more than doubled website
+                    traffic</strong>, and <strong>2,566 online ticket bookings</strong> were recorded on $139.4K of paid media. <strong>Search and Meta</strong> drive bookings; LinkedIn and X don't. Influencer
+                    reach was large but came from one event and two creators. The biggest risk is <strong>measurement</strong>: half of
+                    bookings lose their source, so we can't yet say reliably which spend produces them.
+                </p>
+
+                <div class="conf-legend">
+                    <span><span class="conf ok">Verified</span> checked against source data</span>
+                    <span><span class="conf est">Caveat</span> calculated, or depends on an assumption</span>
+                    <span><span class="conf deck">Deck only</span> as reported; no source data to check</span>
+                </div>
+
+                <div class="metric-grid kpi-8">
+                    <div class="metric-card">
+                        <div class="metric-value">71,476</div>
+                        <div class="metric-label">Museum Visits</div>
+                        <div class="metric-sublabel">DCT Sites visitor dashboard · visits, not tickets</div>
+                        <span class="conf ok">Verified</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">2,566</div>
+                        <div class="metric-label">Online Ticket Bookings</div>
+                        <div class="metric-sublabel">Source and unit (orders or tickets) to be confirmed</div>
+                        <span class="conf est">Caveat</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$54.31</div>
+                        <div class="metric-label">Paid Spend per Online Booking</div>
+                        <div class="metric-sublabel">$139.4K ÷ 2,566 <span class="calc">calc</span></div>
+                        <span class="conf est">Caveat</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">175.5K</div>
+                        <div class="metric-label">Website Users</div>
+                        <div class="metric-sublabel">219.3K sessions · 69% from paid · 1.53% reached booking</div>
+                        <span class="conf ok">Verified</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">51.03M</div>
+                        <div class="metric-label">Influencer Impressions</div>
+                        <div class="metric-sublabel">DCT Always-On, 49 creators</div>
+                        <span class="conf ok">Verified</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">6,290</div>
+                        <div class="metric-label">New Social Followers</div>
+                        <div class="metric-sublabel">+131% vs August (deck)</div>
+                        <span class="conf ok">Verified</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">3,363</div>
+                        <div class="metric-label">New Email Subscribers</div>
+                        <div class="metric-sublabel">Database +29%</div>
+                        <span class="conf deck">Deck only</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">94%</div>
+                        <div class="metric-label">Visitor Satisfaction</div>
+                        <div class="metric-sublabel">1,160 daily-visit responses</div>
+                        <span class="conf deck">Deck only</span>
+                    </div>
+                </div>
+
+                <div class="quadrant-grid">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-circle-check"></i><span class="quadrant-title">Working</span></div>
+                        <p class="quadrant-description">Search and Meta bring bookings at the lowest cost. The Creators Immersion event drove 51M influencer impressions. Visitors rate the museum 94%.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-circle-xmark"></i><span class="quadrant-title">Not working</span></div>
+                        <p class="quadrant-description">LinkedIn and X cost $19.9K for 43 GA4 bookings. Paid social visits are short and rarely book. Member-only emails are opened by about 3% of recipients.</p>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-hand"></i><span class="quadrant-title">Needs leadership</span></div>
+                        <p class="quadrant-description">Back the measurement fixes, agree a budget shift away from LinkedIn and X, confirm the booking source of record, and set Q4 targets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNEY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-route"></i> From Reach to Bookings</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Reach was very large, but only <strong>1.53% of website sessions</strong> reached booking confirmation. The weak point is
+                    the step from website visit to booking, especially for paid social traffic.
+                </p>
+                <div class="journey">
+                    <div class="step">
+                        <div class="step-label">1 · Reach</div>
+                        <div class="step-rows">
+                            <div><strong>36.3M</strong> paid impressions</div>
+                            <div><strong>51.03M</strong> influencer impressions</div>
+                            <div><strong>14.36M</strong> social impressions</div>
+                        </div>
+                        <div class="step-note">Not additive: TikTok and creators appear in more than one</div>
+                    </div>
+                    <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    <div class="step">
+                        <div class="step-label">2 · Website</div>
+                        <div class="step-rows">
+                            <div><strong>175.5K</strong> users</div>
+                            <div><strong>219.3K</strong> sessions</div>
+                            <div><strong>33.7%</strong> engaged</div>
+                        </div>
+                        <div class="step-note">Engagement fell as paid traffic grew (deck: −6.8%)</div>
+                    </div>
+                    <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    <div class="step">
+                        <div class="step-label">3 · Bookings</div>
+                        <div class="step-rows">
+                            <div><strong>3,348</strong> booking sessions (GA4)</div>
+                            <div><strong>2,566</strong> online bookings</div>
+                            <div><strong>1.53%</strong> of sessions</div>
+                        </div>
+                        <div class="step-note">Two sources disagree; the system of record isn't confirmed</div>
+                    </div>
+                    <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    <div class="step">
+                        <div class="step-label">4 · Visit</div>
+                        <div class="step-rows">
+                            <div><strong>71,476</strong> museum visits</div>
+                            <div><strong>94%</strong> satisfaction</div>
+                            <div><strong>3,513</strong> app audio tour plays</div>
+                        </div>
+                        <div class="step-note">Visits from the DCT Sites dashboard; satisfaction and app from the deck</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COST PER BOOKING -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-scale-balanced"></i> What a Booking Costs by Channel</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    The ad platforms and the website disagree on how many bookings each channel made, so cost per booking is shown both ways.
+                    <strong>Search and Meta are cheapest either way.</strong> X costs about 3 to 8 times as much, depending on the view, and <strong>LinkedIn produced 2 GA4
+                    bookings for $9.95K</strong>.
+                </p>
+                <div class="chart-container" style="height: 360px;"><canvas id="cpbChart"></canvas></div>
+                <p class="note">Platform view: spend ÷ purchases the platform reports. GA4 view: spend ÷ booking sessions GA4 credits to that platform (last click). Platforms over-claim; GA4 under-credits because half of bookings lose their source. The true figure is likely between the two. LinkedIn ($4,976 per GA4 booking, 0 platform purchases) is left off the scale. Epsilon display ($18.0K) has no tracked bookings.</p>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-lightbulb"></i> Six Things Leadership Should Know</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-arrow-trend-up"></i><span class="quadrant-title">1. Traffic doubled; quality fell</span></div>
+                        <p class="quadrant-description">Users rose 133% (deck), with 69% from paid. Paid social visits last about 30 seconds and book at under 1%, against 1.17% for Google Ads.</p>
+                        <div class="quadrant-action">Judge paid social on bookings, not visits · Paid media</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-magnifying-glass-dollar"></i><span class="quadrant-title">2. Search and Meta earn their budget</span></div>
+                        <p class="quadrant-description">Together they took $90.8K (65% of spend) and made 1,081 GA4 bookings. LinkedIn and X took $19.9K for 43.</p>
+                        <div class="quadrant-action">Move LinkedIn and X budget · Paid media</div>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-link-slash"></i><span class="quadrant-title">3. Measurement hides what works</span></div>
+                        <p class="quadrant-description">49% of bookings lose their source. Platforms claim 2,545 purchases, 99% of all online bookings. Influencer visits can't be identified on the website.</p>
+                        <div class="quadrant-action">Fix booking tracking and UTMs · Web &amp; analytics</div>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-users"></i><span class="quadrant-title">4. Influencer reach rests on one event</span></div>
+                        <p class="quadrant-description">The Creators Immersion visit drove 51M impressions. Two creators made about half. Only 4.2% of creators' followers are in the UAE.</p>
+                        <div class="quadrant-action">Repeat the event; add GCC creators · Influencer agency</div>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-envelope-open"></i><span class="quadrant-title">5. Members aren't opening emails</span></div>
+                        <p class="quadrant-description">Member-only emails were opened by 2.8–3.5% of recipients, against 37.9% for the same campaign sent to the full list. That suggests a delivery or list problem.</p>
+                        <div class="quadrant-action">Investigate urgently · CRM</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-heart"></i><span class="quadrant-title">6. Organic social is healthy</span></div>
+                        <p class="quadrant-description">6,290 new followers. Organic engagement is about 1.95%, inside the 1–5% benchmark; the 0.18% headline is a paid TikTok effect.</p>
+                        <div class="quadrant-action">Swap carousels for short video · Social</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DECISIONS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-gavel"></i> Decisions Needed</h2>
+            <div class="main-section-content">
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Decision</th><th>Why</th><th>Owner</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td><strong>Approve the booking-tracking fixes</strong>: exclude the ticketing site as a traffic source, track bookings with revenue, and enforce one tagging standard, including tracked links for any influencers who use them</td><td>Half of bookings can't be credited to the channel that drove them</td><td>Web &amp; analytics</td></tr>
+                        <tr><td>2</td><td><strong>Confirm the source of record for bookings</strong>, and whether it counts orders or tickets</td><td>2,566 online bookings and 3,348 GA4 booking sessions can't both be the headline, and neither can yet be set against 71,476 visits</td><td>Digital marketing with ticketing</td></tr>
+                        <tr><td>3</td><td><strong>Agree to move LinkedIn and X budget</strong> ($19.9K in September) to Search, Meta or a capped test</td><td>43 GA4 bookings against 1,081 for Search and Meta</td><td>Paid media</td></tr>
+                        <tr><td>4</td><td><strong>Set Q4 targets</strong> for museum visits, online bookings, cost per booking, new members and website users</td><td>Without targets, the report can't say whether we're on track</td><td>Leadership</td></tr>
+                        <tr><td>5</td><td><strong>Prioritise the member-email investigation</strong></td><td>Members are the most valuable audience and about 3% open their emails</td><td>CRM</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONFIDENCE -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-shield-halved"></i> How Far to Trust the Numbers</h2>
+            <div class="main-section-content">
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Figure</th><th>Confidence</th><th>Why</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Museum visits (71,476)</td><td><span class="conf ok">Verified</span></td><td>DCT Sites visitor dashboard, updated 21 October 2026. Counts visits, not tickets</td></tr>
+                        <tr><td>Website users, sessions, booking sessions</td><td><span class="conf ok">Verified</span></td><td>Checked against GA4 exports</td></tr>
+                        <tr><td>Influencer, social and paid totals</td><td><span class="conf ok">Verified</span></td><td>Recalculated from the channel reports and exports</td></tr>
+                        <tr><td>Online ticket bookings (2,566)</td><td><span class="conf est">Caveat</span></td><td>Source system not yet confirmed, and not known whether it counts orders or tickets</td></tr>
+                        <tr><td>Cost per booking</td><td><span class="conf est">Caveat</span></td><td>Platforms over-claim; GA4 loses half of bookings' sources</td></tr>
+                        <tr><td>Organic social engagement (1.95%)</td><td><span class="conf est">Caveat</span></td><td>Infers which LinkedIn interactions were paid</td></tr>
+                        <tr><td>Changes vs August</td><td><span class="conf deck">Deck only</span></td><td>August results aren't available to check</td></tr>
+                        <tr><td>Email, app and satisfaction figures</td><td><span class="conf deck">Deck only</span></td><td>No source data provided</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHANNEL DETAIL -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-folder-open"></i> Channel Detail</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid cols-3">
+                    <a class="link-card" href="website.html">
+                        <div class="quadrant-header"><i class="fas fa-globe"></i><span class="quadrant-title">Website</span></div>
+                        <p class="quadrant-description">219.3K sessions · 1.53% booking rate · 49% of bookings lose their source</p>
+                        <span class="link-go">Open dashboard <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <a class="link-card" href="media.html">
+                        <div class="quadrant-header"><i class="fas fa-rectangle-ad"></i><span class="quadrant-title">Paid Media</span></div>
+                        <p class="quadrant-description">$139.4K · 36.3M impressions · 2,545 platform-reported purchases</p>
+                        <span class="link-go">Open dashboard <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <a class="link-card" href="influencers.html">
+                        <div class="quadrant-header"><i class="fas fa-user-group"></i><span class="quadrant-title">Influencers</span></div>
+                        <p class="quadrant-description">51.03M Always-On impressions · Back to School largely inside it</p>
+                        <span class="link-go">Open dashboard <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <a class="link-card" href="social.html">
+                        <div class="quadrant-header"><i class="fas fa-hashtag"></i><span class="quadrant-title">Social Media</span></div>
+                        <p class="quadrant-description">6,290 new followers · ~1.95% organic engagement · Instagram 84% of comments</p>
+                        <span class="link-go">Open dashboard <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <div class="link-card static">
+                        <div class="quadrant-header"><i class="fas fa-envelope"></i><span class="quadrant-title">Email (CRM)</span></div>
+                        <p class="quadrant-description">45,213 sent · 36.6% open · 1.04% click · 3,363 new subscribers <span class="conf deck">Deck only</span></p>
+                    </div>
+                    <div class="link-card static">
+                        <div class="quadrant-header"><i class="fas fa-mobile-screen"></i><span class="quadrant-title">App &amp; Surveys</span></div>
+                        <p class="quadrant-description">1,928 app users · 3,513 audio tour plays · 94% satisfaction (1,160 responses) <span class="conf deck">Deck only</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOTES FOR THE TEAM -->
+        <section class="section">
+            <h2 class="main-section-header collapsed"><i class="fas fa-pen-to-square"></i> Notes for the Report Team</h2>
+            <div class="main-section-content collapsed">
+                <ul class="plain">
+                    <li><i class="fas fa-eraser"></i><strong>Placeholder text.</strong> The current master deck's summary slide contains "64M" placeholder text under each figure.</li>
+                    <li><i class="fas fa-calendar-xmark"></i><strong>Wrong month.</strong> The app slide is titled "August".</li>
+                    <li><i class="fas fa-tag"></i><strong>Visits vs users.</strong> "Website visits" shows users (175.5K); visits (sessions) were 219.3K.</li>
+                    <li><i class="fas fa-user-group"></i><strong>Influencer impressions.</strong> The summary shows 2M (Back to School only) and leaves out Always-On's 51.03M. The two programmes share 51 of 62 posts, so they can't be added.</li>
+                    <li><i class="fas fa-arrow-trend-down"></i><strong>"All metrics grew".</strong> The website slide reports engagement down 6.8% and session time down 36%.</li>
+                    <li><i class="fas fa-users-slash"></i><strong>Tiny survey samples.</strong> Website (4 responses) and retail (2) satisfaction shouldn't be shown as percentages.</li>
+                    <li><i class="fas fa-ticket"></i><strong>Booking source.</strong> Name the system behind "online ticket bookings" on the slide, and say whether it counts orders or tickets.</li>
+                    <li><i class="fas fa-building-columns"></i><strong>Lead with visits.</strong> Museum visits (71,476 in September, DCT Sites visitor dashboard) are the main outcome and aren't in the current deck. The dashboard's month filter would also give August and year-to-date figures.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p style="margin: 0; color: var(--gray-700); font-size: 0.9rem;">© 2026 Research & Insights Unit | Strategic Marketing & Communications | Department of Culture and Tourism – Abu Dhabi</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.main-section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+                const content = this.nextElementSibling;
+                if (content && content.classList.contains('main-section-content')) {
+                    content.classList.toggle('collapsed');
+                }
+            });
+        });
+
+        // Draw charts once Inter has loaded, so axis labels are measured with the right font
+        document.fonts.ready.then(() => {
+
+        Chart.defaults.font.family = 'Inter, sans-serif';
+        Chart.defaults.color = '#c0c0c0';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) Chart.defaults.animation = false;
+
+        // Writes each dataset's valueText at the end of its bars
+        const valueLabels = {
+            id: 'valueLabels',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                chart.data.datasets.forEach((ds, di) => {
+                    const meta = chart.getDatasetMeta(di);
+                    if (!ds.valueText || meta.hidden) return;
+                    meta.data.forEach((bar, i) => {
+                        const text = ds.valueText[i];
+                        if (!text) return;
+                        const { x, y } = bar.getProps(['x', 'y'], true);
+                        ctx.save();
+                        ctx.font = '600 12px Inter, sans-serif';
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
+                        ctx.fillStyle = '#ffffff';
+                        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+                        ctx.strokeText(text, x + 6, y); ctx.fillText(text, x + 6, y);
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+
+        function barDataset(values, colors, label, valueText) {
+            return { label, data: values, backgroundColor: colors, borderRadius: 4, borderSkipped: false, maxBarThickness: 30, valueText };
+        }
+
+        // Cost per booking: platform view vs GA4 view
+        (() => {
+            const labels = ['Meta', 'Google Search', 'TikTok', 'X'];
+            const plat = [42.38, 35.09, 114.95, 276.44];
+            const ga4 = [72.17, 93.68, 128.96, 242.73];
+            const detail = [['$35.0K ÷ 826', '$35.0K ÷ 485'], ['$55.8K ÷ 1,591', '$55.8K ÷ 596'], ['$10.6K ÷ 92', '$10.6K ÷ 82'], ['$9.95K ÷ 36', '$9.95K ÷ 41']];
+            new Chart(document.getElementById('cpbChart'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        barDataset(plat, '#777777', 'Platform-reported', plat.map(v => '$' + v.toFixed(2))),
+                        barDataset(ga4, '#4285f4', 'GA4 last click', ga4.map(v => '$' + v.toFixed(2)))
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    layout: { padding: { left: 12, right: 12 } },
+                    plugins: {
+                        title: { display: true, text: 'Search and Meta book cheapest', color: '#8ab4f8', font: { size: 15, weight: 'bold' }, padding: { bottom: 4 } },
+                        subtitle: { display: true, text: 'Paid cost per booking, two views · calc', color: '#a0a0a0', font: { size: 12 }, padding: { bottom: 14 } },
+                        legend: { display: true, position: 'top', labels: { color: '#ffffff', font: { size: 12 }, boxWidth: 14 } },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.85)', titleColor: '#8ab4f8', bodyColor: '#ffffff',
+                            callbacks: { label: c => `${c.dataset.label}: $${c.parsed.x.toFixed(2)} (${detail[c.dataIndex][c.datasetIndex]})` }
+                        }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grace: '12%', ticks: { color: '#c0c0c0', callback: v => '$' + v } },
+                        y: { grid: { display: false }, ticks: { color: '#c0c0c0' } }
+                    }
+                },
+                plugins: [valueLabels]
+            });
+        })();
+        });
+    </script>
+</body>
+</html>

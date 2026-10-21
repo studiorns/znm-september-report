@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>September 2026 Paid Media Analysis | DCT Abu Dhabi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        /* SONER Logo Animation */
+        @keyframes sonerScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes sonerBlip { 0%, 20%, 100% { opacity: 0; } 2%, 15% { opacity: 1; } 3% { transform: scale(1.2); } }
+
+        .soner-logo { display: flex; align-items: center; color: white; font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 300; }
+        .soner-radar { width: 24px; height: 24px; border-radius: 50%; border: 1px solid white; margin: 0 3px; position: relative; background-color: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        .soner-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: sonerScan 4s linear infinite; transform-origin: center; }
+        .soner-scanner::before { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 50%; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)); transform-origin: bottom left; clip-path: polygon(0 0, 100% 0, 0 100%); }
+        .soner-scanner::after { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 1)); transform-origin: left center; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+        .soner-blip { position: absolute; width: 2px; height: 2px; background-color: white; border-radius: 50%; opacity: 0; box-shadow: 0 0 4px white; }
+        .soner-blip:nth-child(1) { top: 25%; left: 30%; animation: sonerBlip 4s 1s infinite; }
+        .soner-blip:nth-child(2) { top: 65%; left: 60%; animation: sonerBlip 4s 2.5s infinite; }
+        .soner-tagline { color: white; font-size: 8px; text-transform: uppercase; font-weight: 500; letter-spacing: 0.5em; margin-left: 10px; opacity: 0.8; }
+
+        :root {
+            --primary: #4285f4;
+            --primary-light: #1a2233;
+            --primary-dark: #8ab4f8;
+            --secondary: #34a853;
+            --warning: #fbbc04;
+            --danger: #ea4335;
+            --gray-100: #1e1e1e;
+            --gray-200: #2d2d2d;
+            --gray-300: #3d3d3d;
+            --gray-400: #4d4d4d;
+            --gray-500: #777777;
+            --gray-600: #a0a0a0;
+            --gray-700: #c0c0c0;
+            --bg-color: #000000;
+            --card-bg: #121212;
+            --section-bg: #181818;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            background: linear-gradient(135deg, #1a73e8, #174ea6);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 600; line-height: 1.2; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px; }
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 40px 0 25px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        .section > h2:first-child { margin-top: 0; }
+        h3 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin: 30px 0 18px;
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .main-section-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 30px;
+            transition: color 0.2s ease;
+        }
+        .main-section-header:hover { color: var(--primary-dark); }
+        .main-section-header:after {
+            content: '\f078';
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+        }
+        .main-section-header.collapsed:after { transform: translateY(-50%) rotate(-90deg); }
+        .main-section-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+            max-height: 9999px;
+            opacity: 1;
+        }
+        .main-section-content.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+
+        .lead { color: #ffffff; font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; }
+        .lead strong { color: var(--primary-dark); }
+        .note { color: var(--gray-600); font-size: 0.85rem; margin-top: 8px; }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(66, 133, 244, 0.3); }
+        .metric-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .metric-label { font-size: 0.95rem; color: #ffffff; line-height: 1.5; }
+        .metric-sublabel { font-size: 0.85rem; color: var(--gray-600); margin-top: 5px; }
+
+        .chart-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid var(--gray-300);
+            position: relative;
+            height: 400px;
+        }
+        .charts-row { display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0; }
+        .charts-row .chart-container { flex: 1; min-width: 300px; margin: 0; transition: all 0.3s ease; }
+        .charts-row .chart-container:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); }
+
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        thead tr { background-color: var(--gray-200); border-bottom: 2px solid var(--primary); }
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-dark);
+            border-right: 1px solid var(--gray-300);
+        }
+        th:last-child { border-right: none; }
+        td { padding: 15px; border-bottom: 1px solid var(--gray-300); border-right: 1px solid var(--gray-300); }
+        td:last-child { border-right: none; }
+        td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: var(--gray-200); }
+        tr.total-row td { font-weight: 700; background-color: var(--gray-100); }
+
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+        .tier-uae { background-color: rgba(234, 67, 53, 0.2); color: #ea4335; }
+        .tier-t1 { background-color: rgba(66, 133, 244, 0.2); color: #4285f4; }
+        .tier-t2 { background-color: rgba(52, 168, 83, 0.2); color: #34a853; }
+        .tier-warn { background-color: rgba(251, 188, 4, 0.2); color: #fbbc04; }
+
+        .positive { color: var(--secondary); font-weight: bold; }
+        .negative { color: var(--danger); font-weight: bold; }
+        .neutral { color: var(--warning); font-weight: bold; }
+
+        .heat-positive-2 { background-color: rgba(52, 168, 83, 0.14); }
+        .heat-positive-4 { background-color: rgba(52, 168, 83, 0.30); }
+        .heat-negative-2 { background-color: rgba(234, 67, 53, 0.14); }
+        .heat-negative-4 { background-color: rgba(234, 67, 53, 0.30); }
+
+        .calc { color: var(--gray-500); font-size: 0.75rem; font-weight: 500; }
+
+        /* Insight cards */
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .quadrant-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .quadrant-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .quadrant-card { display: flex; flex-direction: column; }
+        .quadrant-card .quadrant-action { margin-top: auto; }
+        .quadrant-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+        .quadrant-card.stars { border-color: var(--secondary); background: linear-gradient(135deg, rgba(52, 168, 83, 0.05), var(--card-bg)); }
+        .quadrant-card.premium { border-color: var(--warning); background: linear-gradient(135deg, rgba(251, 188, 4, 0.05), var(--card-bg)); }
+        .quadrant-card.watch { border-color: var(--primary); background: linear-gradient(135deg, rgba(66, 133, 244, 0.05), var(--card-bg)); }
+        .quadrant-card.flagged { border-color: var(--danger); background: linear-gradient(135deg, rgba(234, 67, 53, 0.05), var(--card-bg)); }
+        .quadrant-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .quadrant-header i { font-size: 1.5rem; }
+        .stars .quadrant-header i { color: var(--secondary); }
+        .premium .quadrant-header i { color: var(--warning); }
+        .watch .quadrant-header i { color: var(--primary); }
+        .flagged .quadrant-header i { color: var(--danger); }
+        .quadrant-title { font-weight: 700; font-size: 0.95rem; flex: 1; }
+        .quadrant-description { color: var(--gray-600); font-size: 0.9rem; margin-bottom: 10px; }
+        .quadrant-action { font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; }
+        .stars .quadrant-action { background-color: rgba(52, 168, 83, 0.15); color: var(--secondary); }
+        .premium .quadrant-action { background-color: rgba(251, 188, 4, 0.15); color: var(--warning); }
+        .watch .quadrant-action { background-color: rgba(66, 133, 244, 0.15); color: var(--primary); }
+        .flagged .quadrant-action { background-color: rgba(234, 67, 53, 0.15); color: var(--danger); }
+
+        /* Inconsistency cards */
+        .flagged-market-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .flagged-market-card.minor { border-color: var(--warning); }
+        .flagged-market-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .flagged-market-header h4 { color: #ffffff; margin: 0; font-size: 1.1rem; }
+        .issue-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-300); flex-wrap: wrap; }
+        .issue-row:last-child { border-bottom: none; }
+        .issue-label { font-weight: 600; color: var(--gray-600); min-width: 140px; }
+        .issue-value { font-weight: 600; }
+        .flagged-market-recommendation {
+            background-color: rgba(251, 188, 4, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+
+        ul.plain { list-style: none; }
+        ul.plain li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--gray-300); color: var(--gray-700); }
+        ul.plain li:last-child { border-bottom: none; }
+        ul.plain li i { position: absolute; left: 0; top: 13px; color: var(--primary-dark); font-size: 0.9rem; }
+
+        footer {
+            background-color: var(--gray-100);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--gray-300);
+            color: #ffffff;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .quadrant-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .section { padding: 20px; }
+            .metric-grid { grid-template-columns: 1fr 1fr; }
+            .metric-value { font-size: 1.6rem; }
+            .charts-row .chart-container { min-width: 100%; }
+            .quadrant-grid.cols-3 { grid-template-columns: 1fr; }
+            th, td { padding: 10px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
+                <div class="soner-logo">
+                    S<div class="soner-radar">
+                        <div class="soner-scanner"></div>
+                        <div class="soner-blip"></div>
+                        <div class="soner-blip"></div>
+                    </div>NER
+                    <span class="soner-tagline">Strategic Intelligence</span>
+                </div>
+            </div>
+            <h1>September 2026 Paid Media Analysis</h1>
+            <p class="subtitle">Evergreen Awareness · Evergreen Conversion · Member September · Hero Display</p>
+            <p>Paid media performance, September 2026 | Figures marked <em>calc</em> are calculated from reported spend, clicks and purchases</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- EXECUTIVE SUMMARY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-chart-line"></i> Executive Summary</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    September delivered <strong>36.3M impressions</strong>, <strong>172.6K clicks</strong> and
+                    <strong>2,545 purchases</strong> on <strong>$139.4K</strong>. Search was both the biggest and the cheapest
+                    converter, delivering <strong>62.5% of purchases on 40.1% of spend</strong> at about $35 each.
+                    Meta was a reliable second at $42.38. LinkedIn spent $9.9K for no purchases, and Hero Display's $18K
+                    has no purchase measure, so it can only be judged on clicks.
+                </p>
+
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">$139.4K</div>
+                        <div class="metric-label">Total Spend</div>
+                        <div class="metric-sublabel">6 platforms, 3 campaigns + Member push</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">36.3M</div>
+                        <div class="metric-label">Impressions</div>
+                        <div class="metric-sublabel">$3.83 blended CPM</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">172.6K</div>
+                        <div class="metric-label">Clicks</div>
+                        <div class="metric-sublabel">529.8K video views</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">2,545</div>
+                        <div class="metric-label">Purchases</div>
+                        <div class="metric-sublabel">Search 1,591 · Meta 826</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$54.76</div>
+                        <div class="metric-label">Blended Cost per Purchase</div>
+                        <div class="metric-sublabel">$47.67 excl. Hero Display <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$35.09</div>
+                        <div class="metric-label">Search Cost per Purchase</div>
+                        <div class="metric-sublabel">Cheapest converter <span class="calc">calc</span></div>
+                    </div>
+                </div>
+
+                <div class="quadrant-grid">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-trophy"></i><span class="quadrant-title">Biggest win</span></div>
+                        <p class="quadrant-description">Search turned a 9.52% CTR into 1,591 purchases. English Brand alone made 737 at a $1.10 CPC.</p>
+                        <div class="quadrant-action">Protect and scale Search</div>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-circle-exclamation"></i><span class="quadrant-title">Biggest gap</span></div>
+                        <p class="quadrant-description">LinkedIn took 55% of the Member September budget on one creative and produced no purchases.</p>
+                        <div class="quadrant-action">Cap and retest with 2–3 creatives</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-question-circle"></i><span class="quadrant-title">Biggest unknown</span></div>
+                        <p class="quadrant-description">Hero Display spent $18K for 9K clicks with no purchases reported, so its value can't be compared with other channels.</p>
+                        <div class="quadrant-action">Add a conversion measure before the next flight</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPEND RECONCILIATION -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-scale-balanced"></i> Where the Money Went</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Platform spend adds up to <strong>$139,358.87</strong>, matching the reported $139.4K total. Member September is
+                    not a separate budget: it ran <strong>inside Evergreen Conversion</strong>, so its $18K and 148 purchases are
+                    already counted in the Conversion figures.
+                </p>
+                <div class="charts-row">
+                    <div class="chart-container"><canvas id="spendShareChart"></canvas></div>
+                </div>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Platform</th><th>Campaign</th><th class="num">Spend</th><th class="num">Share of spend</th><th class="num">Purchases</th><th class="num">Share of purchases</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Google Search</td><td><span class="tier-badge tier-t1">Conversion</span></td><td class="num">$55,831</td><td class="num">40.1%</td><td class="num">1,591</td><td class="num heat-positive-4">62.5%</td></tr>
+                        <tr><td>Meta</td><td><span class="tier-badge tier-t1">Conversion</span></td><td class="num">$35,004</td><td class="num">25.1%</td><td class="num">826</td><td class="num heat-positive-2">32.5%</td></tr>
+                        <tr><td>Epsilon (display)</td><td><span class="tier-badge tier-warn">Hero Display</span></td><td class="num">$18,046</td><td class="num">12.9%</td><td class="num">–</td><td class="num">Not reported</td></tr>
+                        <tr><td>TikTok</td><td><span class="tier-badge tier-t2">Awareness</span></td><td class="num">$10,575</td><td class="num">7.6%</td><td class="num">92</td><td class="num">3.6%</td></tr>
+                        <tr><td>X</td><td><span class="tier-badge tier-t1">Conversion</span></td><td class="num">$9,952</td><td class="num">7.1%</td><td class="num">36</td><td class="num heat-negative-2">1.4%</td></tr>
+                        <tr><td>LinkedIn</td><td><span class="tier-badge tier-t1">Conversion</span></td><td class="num">$9,951</td><td class="num">7.1%</td><td class="num">0</td><td class="num heat-negative-4">0%</td></tr>
+                        <tr class="total-row"><td>Total</td><td></td><td class="num">$139,359</td><td class="num">100%</td><td class="num">2,545</td><td class="num">100%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Shares of spend and purchases are calculated from platform figures.</p>
+            </div>
+        </section>
+
+        <!-- CHANNEL EFFICIENCY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-bullseye"></i> Channel Efficiency</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Cheap reach and cheap purchases are different things. TikTok and X buy attention for cents, but their purchases cost
+                    <strong>$115</strong> and <strong>$276</strong>. Search costs the most per click among converting channels and still
+                    delivers the cheapest purchases, because <strong>3.9% of its clicks convert</strong>, about 3.3 times Meta's rate.
+                </p>
+                <div class="charts-row">
+                    <div class="chart-container"><canvas id="cpaChart"></canvas></div>
+                    <div class="chart-container"><canvas id="convRateChart"></canvas></div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-container"><canvas id="cpmChart"></canvas></div>
+                    <div class="chart-container"><canvas id="cpcChart"></canvas></div>
+                </div>
+                <p class="note">Search is excluded from the CPM chart: it is bought per click, so its CPM (about $129.53) isn't comparable with display and social.</p>
+
+                <h3>Channel Scorecard</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Channel</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">CPC</th><th class="num">Click → purchase</th><th class="num">Cost per purchase</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Google Search</td><td class="num">431,047</td><td class="num">41,054</td><td class="num">9.52%</td><td class="num">$129.53*</td><td class="num">$1.36</td><td class="num heat-positive-4">3.88%</td><td class="num heat-positive-4">$35.09</td></tr>
+                        <tr><td>Meta</td><td class="num">8,481,682</td><td class="num">69,538</td><td class="num">0.82%</td><td class="num">$4.13</td><td class="num">$0.50</td><td class="num heat-positive-2">1.19%</td><td class="num heat-positive-2">$42.38</td></tr>
+                        <tr><td>TikTok</td><td class="num">19,952,514</td><td class="num">31,223</td><td class="num">0.16%</td><td class="num">$0.53</td><td class="num">$0.34</td><td class="num">0.29%</td><td class="num heat-negative-2">$114.95</td></tr>
+                        <tr><td>X</td><td class="num">5,811,126</td><td class="num">18,466</td><td class="num">0.32%</td><td class="num">$1.71</td><td class="num">$0.54</td><td class="num">0.19%</td><td class="num heat-negative-4">$276.44</td></tr>
+                        <tr><td>LinkedIn</td><td class="num">737,776</td><td class="num">3,296</td><td class="num">0.45%</td><td class="num">$13.49</td><td class="num">$3.02</td><td class="num heat-negative-4">0%</td><td class="num heat-negative-4">No purchases</td></tr>
+                        <tr><td>Epsilon (display)</td><td class="num">932,148</td><td class="num">9,023</td><td class="num">0.97%</td><td class="num">$19.36</td><td class="num">$2.00</td><td class="num">–</td><td class="num">Not reported</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Impressions, clicks, CTR, CPC and the CPMs of Meta, TikTok, LinkedIn and Epsilon are reported figures. Meta and TikTok CTR, X CPM, Search CPM*, click-to-purchase rates and costs per purchase are calculated.</p>
+            </div>
+        </section>
+
+        <!-- CAMPAIGN DEEP DIVES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-layer-group"></i> Campaign Deep Dives</h2>
+            <div class="main-section-content">
+
+                <h3><i class="fas fa-magnifying-glass"></i> Search: where the purchases came from</h3>
+                <p class="lead">
+                    English Brand led with <strong>737 purchases</strong> at the best CTR (10.63%) and lowest CPC ($1.10).
+                    Generic (423) and Competition (344) together added 767. Arabic Brand engages well (8.38% CTR) but costs
+                    <strong>$3.44 per click</strong>, over three times English Brand.
+                </p>
+                <div class="chart-container" style="height: 320px;"><canvas id="searchChart"></canvas></div>
+                <p class="note">*"Arabic & other" (87) is the remainder of 1,591 after the three named campaigns. It isn't reported directly, so treat it as an upper limit for Arabic Brand.</p>
+
+                <h3><i class="fas fa-share-nodes"></i> Meta: conversion creatives</h3>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">439</div>
+                        <div class="metric-label">Book Your Workshops</div>
+                        <div class="metric-sublabel">$39.30 per purchase</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">200</div>
+                        <div class="metric-label">Museum Visit Exterior</div>
+                        <div class="metric-sublabel">$44.32 per purchase</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">134</div>
+                        <div class="metric-label">Member September</div>
+                        <div class="metric-sublabel">$45.62 per purchase</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$0.78</div>
+                        <div class="metric-label">Cost per Landing Page View</div>
+                        <div class="metric-sublabel">44.8K landing page views · 1.4M reach</div>
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-id-card"></i> Member September ($18K inside Conversion)</h3>
+                <p class="lead">
+                    The push delivered <strong>148 purchases for $18,007</strong>, or $121.67 each <span class="calc">calc</span>.
+                    Meta made 91% of the purchases on 34% of the budget. LinkedIn took 55% and made none. Without LinkedIn, the
+                    push cost <strong>$54.43 per purchase</strong> <span class="calc">calc</span>.
+                </p>
+                <div class="charts-row">
+                    <div class="chart-container" style="height: 340px;"><canvas id="memberChart"></canvas></div>
+                </div>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Platform</th><th class="num">Spend</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">Purchases</th><th class="num">Cost per purchase</th><th>Best asset</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Meta</td><td class="num">$6,113</td><td class="num">1,180,503</td><td class="num">13,488</td><td class="num">134</td><td class="num heat-positive-4">$45.62</td><td>Post 4 static (50 purchases); Post 5 cheapest at $29.38</td></tr>
+                        <tr><td>X</td><td class="num">$1,942</td><td class="num">1,180,525</td><td class="num">2,278</td><td class="num">14</td><td class="num">$138.75</td><td>Single "Member Sep" creative</td></tr>
+                        <tr><td>LinkedIn</td><td class="num">$9,951</td><td class="num">737,776</td><td class="num">3,296</td><td class="num">0</td><td class="num heat-negative-4">No purchases</td><td>One video: 238.6K views, 32.34% VTR</td></tr>
+                        <tr class="total-row"><td>Total</td><td class="num">$18,007</td><td class="num">3,098,804</td><td class="num">19,062</td><td class="num">148</td><td class="num">$121.67</td><td></td></tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <h3><i class="fas fa-hashtag"></i> X: the membership creative carried it</h3>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">$276</div>
+                        <div class="metric-label">Cost per Purchase, all of X</div>
+                        <div class="metric-sublabel">$9,952 for 36 purchases <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$139</div>
+                        <div class="metric-label">Member Sep Creative</div>
+                        <div class="metric-sublabel">$1,942 for 14 purchases</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$364</div>
+                        <div class="metric-label">Rest of X</div>
+                        <div class="metric-sublabel">$8,009 for 22 purchases <span class="calc">calc</span></div>
+                    </div>
+                </div>
+
+                <h3><i class="fab fa-tiktok"></i> TikTok: Evergreen Awareness</h3>
+                <p class="lead">
+                    19.9M impressions reached <strong>3.8M people</strong> at a $0.53 CPM and $0.04 per view, with 10.7K landing page views and
+                    <strong>92 purchases</strong>. Emirati Women Police and Astrolabe were the most efficient creatives at $0.49 CPM. Northern
+                    Emirates was slightly cheaper ($0.524 vs $0.534 CPM) and watched slightly more (1.45% vs 1.41%) than Dubai &amp; Abu Dhabi.
+                </p>
+
+                <h3><i class="fas fa-tv"></i> Hero Display: Epsilon, 7–15 September</h3>
+                <p class="lead">
+                    932.1K impressions and 9,023 clicks at a <strong>0.97% CTR</strong> and a flat $2.00 CPC. Full Screen 1080x1920 clicked at
+                    more than twice the average, but on only 42K impressions.
+                </p>
+                <div class="chart-container" style="height: 320px;"><canvas id="displayChart"></canvas></div>
+                <p class="note">*Skyscraper's 0.46% CTR is reported without impressions or clicks. What remains after the other three formats (about 20K impressions and 93 clicks, calc) gives the same 0.46%, if those four were the only formats.</p>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-lightbulb"></i> Key Insights</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-magnifying-glass-dollar"></i><span class="quadrant-title">Search is the conversion engine</span></div>
+                        <p class="quadrant-description">62.5% of purchases on 40.1% of spend, at $35.09 each. It is the biggest and the cheapest converter.</p>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-users"></i><span class="quadrant-title">Meta does the social converting</span></div>
+                        <p class="quadrant-description">826 purchases at $42.38, plus 134 of the 148 membership purchases. Workshops is its strongest product at $39.30.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-eye"></i><span class="quadrant-title">Cheap reach is not cheap buying</span></div>
+                        <p class="quadrant-description">TikTok's $0.53 CPM and X's $1.71 CPM become $115 and $276 per purchase. Judge each channel on the job it was bought for.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-ban"></i><span class="quadrant-title">LinkedIn earns attention, not purchases</span></div>
+                        <p class="quadrant-description">A strong 32.34% video view rate but no purchases from $9.9K, the highest CPC of any channel ($3.02).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPPORTUNITIES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-rocket"></i> Opportunities</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-arrow-trend-up"></i><span class="quadrant-title">Shift budget toward Search</span></div>
+                        <p class="quadrant-description">Prioritise English Brand and Generic, and keep Competition as an extra source of purchases. Check first that volume can grow, since brand search depends on demand.</p>
+                        <div class="quadrant-action">Recommended + analysis</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-language"></i><span class="quadrant-title">Bring Arabic search CPC down</span></div>
+                        <p class="quadrant-description">Arabic Brand engages at 8.38% CTR but costs $3.44 per click. Refining terms, bids and keywords toward the English level is the cheapest efficiency gain available.</p>
+                        <div class="quadrant-action">Existing recommendation</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-images"></i><span class="quadrant-title">Lean on Meta statics for membership</span></div>
+                        <p class="quadrant-description">Post 4 sold 50 and Post 5 converted at $29.38. Supply every ad in feed and story sizes, and move post engagement ads into awareness.</p>
+                        <div class="quadrant-action">Existing recommendation</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-filter"></i><span class="quadrant-title">Test TikTok lower in the funnel</span></div>
+                        <p class="quadrant-description">The awareness audience is already buying (92 purchases). A mid- and lower-funnel test would show whether its $115 cost per purchase can come down.</p>
+                        <div class="quadrant-action">Existing recommendation</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-mobile-alt"></i><span class="quadrant-title">Give Full Screen display more share</span></div>
+                        <p class="quadrant-description">2.09% CTR against a 0.97% average. Keep Half Page as the volume anchor and review Billboard and Skyscraper before the next flight.</p>
+                        <div class="quadrant-action">Existing recommendation</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-flask"></i><span class="quadrant-title">Capped LinkedIn retest</span></div>
+                        <p class="quadrant-description">Run 2–3 creative variations on a capped budget (for example, under $3K) before committing another $10K.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THINGS TO WATCH -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-binoculars"></i> Things to Watch</h2>
+            <div class="main-section-content">
+                <ul class="plain">
+                    <li><i class="fas fa-hashtag"></i><strong>X needs a full month.</strong> It returned after almost a year, so September is a first data point. So far it is the weakest channel that produced purchases.</li>
+                    <li><i class="fab fa-linkedin"></i><strong>LinkedIn has been tested with one ad only.</strong> One creative in one month isn't a verdict on the platform, but the next test should have a spend cap.</li>
+                    <li><i class="fas fa-tv"></i><strong>Hero Display has no purchase evidence.</strong> At $19.36 it has the highest CPM of the display and social channels and a $2.00 CPC. Without a conversion measure it can't be compared with the rest.</li>
+                    <li><i class="fas fa-magnifying-glass"></i><strong>Search scale depends on brand demand.</strong> English Brand is the best performer, but brand search can only grow as fast as people search for the brand.</li>
+                    <li><i class="fas fa-vial"></i><strong>Small samples.</strong> Full Screen display (42K impressions), X's single membership creative and LinkedIn's single ad are too small to draw firm conclusions from.</li>
+                    <li><i class="fas fa-shuffle"></i><strong>Attribution isn't stated.</strong> It isn't stated how purchases are attributed on each platform. Search and social likely overlap, so cost-per-purchase comparisons are approximate.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- INCONSISTENCIES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-triangle-exclamation"></i> Data Inconsistencies</h2>
+            <div class="main-section-content">
+                <p class="lead">All totals reconcile. These figures should be checked with whoever owns the data before they are reused.</p>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>Search: more landing page views than clicks</h4><span class="tier-badge tier-uae">Query with data owner</span></div>
+                    <div class="issue-row"><span class="issue-label">Search</span><span class="issue-value">109,676 landing page views vs 41,054 clicks</span></div>
+                    <div class="flagged-market-recommendation">A landing page view normally follows a click, so this ratio (2.7 to 1) suggests a tracking or definition issue.</div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>Member September video views look copied</h4><span class="tier-badge tier-uae">Likely copy-paste</span></div>
+                    <div class="issue-row"><span class="issue-label">Member September</span><span class="issue-value">245.7K video views, the same as the whole Evergreen Conversion campaign</span></div>
+                    <div class="flagged-market-recommendation">LinkedIn alone had 238.6K, so the figure is only right if Meta and X membership ads together got about 7K views.</div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>Meta and X membership impressions almost identical</h4><span class="tier-badge tier-uae">Likely copy-paste</span></div>
+                    <div class="issue-row"><span class="issue-label">Membership impressions</span><span class="issue-value">Meta 1,180,503 vs X 1,180,525</span></div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>X purchases not fully itemised</h4><span class="tier-badge tier-warn">Gap</span></div>
+                    <div class="issue-row"><span class="issue-label">X purchases by creative</span><span class="issue-value">Member Sep 14 + Museum Visit Exterior 9 + Book Your Workshops 5 = 28 of 36</span></div>
+                    <div class="flagged-market-recommendation">The other 8 purchases aren't attributed to a creative.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Skyscraper format has no asset data</h4><span class="tier-badge tier-warn">Gap</span></div>
+                    <div class="issue-row"><span class="issue-label">Hero Display formats</span><span class="issue-value">0.46% CTR reported, but no impressions or clicks</span></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- METHOD -->
+        <section class="section">
+            <h2 class="main-section-header collapsed"><i class="fas fa-circle-info"></i> Method &amp; Notes</h2>
+            <div class="main-section-content collapsed">
+                <ul class="plain">
+                                        <li><i class="fas fa-calculator"></i>Figures marked <em>calc</em> are calculated from reported spend, impressions, clicks and purchases. Every recalculated CTR, CPC, CPM and cost per purchase matches the reported figures to rounding.</li>
+                    <li><i class="fas fa-sitemap"></i>Campaign totals = Evergreen Awareness (TikTok) + Evergreen Conversion (Meta, X, LinkedIn, Search) + Hero Display (Epsilon). Member September sits inside Conversion.</li>
+                    <li><i class="fas fa-ban"></i>Hero Display reports no purchases, so blended cost per purchase is shown both with ($54.76) and without ($47.67) its spend.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p style="margin: 0; color: var(--gray-700); font-size: 0.9rem;">© 2026 Research & Insights Unit | Strategic Marketing & Communications | Department of Culture and Tourism – Abu Dhabi</p>
+        </div>
+    </footer>
+
+    <script>
+        // Section collapse, as in the summer dashboard
+        document.querySelectorAll('.main-section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+                const content = this.nextElementSibling;
+                if (content && content.classList.contains('main-section-content')) {
+                    content.classList.toggle('collapsed');
+                }
+            });
+        });
+
+        if (window['chartjs-plugin-annotation']) Chart.register(window['chartjs-plugin-annotation']);
+
+        // Draw charts once Inter has loaded, so axis labels are measured with the right font
+        document.fonts.ready.then(() => {
+
+        Chart.defaults.font.family = 'Inter, sans-serif';
+        Chart.defaults.color = '#c0c0c0';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+
+        // Fixed colour per channel, used in every chart
+        const CH = {
+            'Search':   '#4285f4',
+            'Meta':     '#8ab4f8',
+            'TikTok':   '#24c1e0',
+            'X':        '#fa7b17',
+            'LinkedIn': '#f538a0',
+            'Epsilon':  '#fbbc04'
+        };
+        const fmt$ = v => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        function baseOptions(title, opts = {}) {
+            // Only the value axis gets a custom tick format; the category axis keeps its labels
+            const valueTicks = { color: '#c0c0c0' };
+            if (opts.tick) valueTicks.callback = opts.tick;
+            const catTicks = { color: '#c0c0c0' };
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: { left: 12 } },
+                indexAxis: opts.horizontal ? 'y' : 'x',
+                plugins: {
+                    title: { display: true, text: title, color: '#8ab4f8', font: { size: 16, weight: 'bold' }, padding: { bottom: 16 } },
+                    legend: { display: !!opts.legend, position: 'top', labels: { color: '#ffffff', font: { size: 12 }, boxWidth: 14 } },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                        titleColor: '#8ab4f8',
+                        bodyColor: '#ffffff',
+                        callbacks: opts.tooltip ? { label: opts.tooltip } : {}
+                    },
+                    annotation: { annotations: opts.annotations || {} }
+                },
+                scales: {
+                    x: { grid: { display: !!opts.horizontal }, ticks: opts.horizontal ? valueTicks : catTicks, beginAtZero: true },
+                    y: { grid: { display: !opts.horizontal }, ticks: opts.horizontal ? catTicks : valueTicks, beginAtZero: true }
+                }
+            };
+        }
+
+        function barDataset(labels, values, colors, label) {
+            return {
+                label: label || '',
+                data: values,
+                backgroundColor: colors,
+                borderRadius: 4,
+                borderSkipped: false,
+                maxBarThickness: 36
+            };
+        }
+
+        function refLine(value, text, horizontal) {
+            const axis = horizontal ? { xMin: value, xMax: value } : { yMin: value, yMax: value };
+            return Object.assign({
+                type: 'line',
+                borderColor: 'rgba(255, 255, 255, 0.45)',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                label: { display: true, content: text, position: 'start', backgroundColor: 'rgba(0, 0, 0, 0.75)', color: '#ffffff', font: { size: 11 } }
+            }, axis);
+        }
+
+        // 1. Share of spend vs share of purchases
+        (() => {
+            const labels = ['Search', 'Meta', 'Epsilon', 'TikTok', 'X', 'LinkedIn'];
+            new Chart(document.getElementById('spendShareChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Search', 'Meta', 'Epsilon (display)', 'TikTok', 'X', 'LinkedIn'],
+                    datasets: [
+                        barDataset(labels, [40.1, 25.1, 12.9, 7.6, 7.1, 7.1], '#4d4d4d', 'Share of spend'),
+                        barDataset(labels, [62.5, 32.5, 0, 3.6, 1.4, 0], labels.map(l => CH[l]), 'Share of purchases')
+                    ]
+                },
+                options: (() => {
+                    const o = baseOptions('Share of Spend vs Share of Purchases (%)', {
+                        legend: true,
+                        tick: v => v + '%',
+                        tooltip: c => `${c.dataset.label}: ${c.parsed.y}%` + (c.label.startsWith('Epsilon') && c.datasetIndex === 1 ? ' (no purchases reported)' : '')
+                    });
+                    o.plugins.legend.labels.generateLabels = () => [
+                        { text: 'Share of spend (grey)', fillStyle: '#4d4d4d', strokeStyle: '#4d4d4d', fontColor: '#ffffff' },
+                        { text: 'Share of purchases (channel colour)', fillStyle: '#4285f4', strokeStyle: '#4285f4', fontColor: '#ffffff' }
+                    ];
+                    o.plugins.legend.onClick = null;
+                    return o;
+                })()
+            });
+        })();
+
+        // 2. Cost per purchase
+        (() => {
+            const labels = ['Search', 'Meta', 'TikTok', 'X'];
+            new Chart(document.getElementById('cpaChart'), {
+                type: 'bar',
+                data: { labels, datasets: [barDataset(labels, [35.09, 42.38, 114.95, 276.44], labels.map(l => CH[l]), 'Cost per purchase')] },
+                options: baseOptions('Cost per Purchase (calc) · dashed line = Conversion blended $45.14', {
+                    horizontal: true,
+                    tick: v => '$' + v,
+                    tooltip: c => `Cost per purchase: ${fmt$(c.parsed.x)}`,
+                    annotations: { blended: Object.assign(refLine(45.14, '', true), { label: { display: false } }) }
+                })
+            });
+        })();
+
+        // 3. Click-to-purchase rate
+        (() => {
+            const labels = ['Search', 'Meta', 'TikTok', 'X', 'LinkedIn'];
+            new Chart(document.getElementById('convRateChart'), {
+                type: 'bar',
+                data: { labels, datasets: [barDataset(labels, [3.88, 1.19, 0.29, 0.19, 0], labels.map(l => CH[l]), 'Click to purchase')] },
+                options: baseOptions('Click-to-Purchase Rate (calc)', {
+                    horizontal: true,
+                    tick: v => v + '%',
+                    tooltip: c => `Clicks that became purchases: ${c.parsed.x}%`
+                })
+            });
+        })();
+
+        // 4. CPM (Search excluded)
+        (() => {
+            const labels = ['Epsilon', 'LinkedIn', 'Meta', 'X', 'TikTok'];
+            new Chart(document.getElementById('cpmChart'), {
+                type: 'bar',
+                data: { labels: ['Epsilon (display)', 'LinkedIn', 'Meta', 'X', 'TikTok'], datasets: [barDataset(labels, [19.36, 13.49, 4.13, 1.71, 0.53], labels.map(l => CH[l]), 'CPM')] },
+                options: baseOptions('CPM: Display & Social', {
+                    tick: v => '$' + v,
+                    tooltip: c => `CPM: ${fmt$(c.parsed.y)}`
+                })
+            });
+        })();
+
+        // 5. CPC
+        (() => {
+            const labels = ['LinkedIn', 'Epsilon', 'Search', 'X', 'Meta', 'TikTok'];
+            new Chart(document.getElementById('cpcChart'), {
+                type: 'bar',
+                data: { labels: ['LinkedIn', 'Epsilon (display)', 'Search', 'X', 'Meta', 'TikTok'], datasets: [barDataset(labels, [3.02, 2.00, 1.36, 0.54, 0.50, 0.34], labels.map(l => CH[l]), 'CPC')] },
+                options: baseOptions('Cost per Click', {
+                    tick: v => '$' + v.toFixed(2),
+                    tooltip: c => `CPC: ${fmt$(c.parsed.y)}`
+                })
+            });
+        })();
+
+        // 6. Search campaigns
+        (() => {
+            new Chart(document.getElementById('searchChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['English Brand', 'Generic', 'Competition', 'Arabic & other*'],
+                    datasets: [{
+                        label: 'Purchases',
+                        data: [737, 423, 344, 87],
+                        backgroundColor: ['#4285f4', '#4285f4', '#4285f4', 'rgba(66, 133, 244, 0.4)'],
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        maxBarThickness: 36
+                    }]
+                },
+                options: baseOptions('Search Purchases by Campaign (1,591 total)', {
+                    horizontal: true,
+                    tooltip: c => `Purchases: ${c.parsed.x.toLocaleString()}`
+                })
+            });
+        })();
+
+        // 7. Member September: spend vs purchases share
+        (() => {
+            const labels = ['Meta', 'X', 'LinkedIn'];
+            const o = baseOptions('Member September: Share of Spend vs Share of Purchases (%)', {
+                legend: true,
+                tick: v => v + '%',
+                tooltip: c => `${c.dataset.label}: ${c.parsed.y}%`
+            });
+            o.plugins.legend.labels.generateLabels = () => [
+                { text: 'Share of spend (grey)', fillStyle: '#4d4d4d', strokeStyle: '#4d4d4d', fontColor: '#ffffff' },
+                { text: 'Share of purchases (channel colour)', fillStyle: '#8ab4f8', strokeStyle: '#8ab4f8', fontColor: '#ffffff' }
+            ];
+            o.plugins.legend.onClick = null;
+            new Chart(document.getElementById('memberChart'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        barDataset(labels, [33.9, 10.8, 55.3], '#4d4d4d', 'Share of spend'),
+                        barDataset(labels, [90.5, 9.5, 0], labels.map(l => CH[l]), 'Share of purchases')
+                    ]
+                },
+                options: o
+            });
+        })();
+
+        // 8. Display formats CTR
+        (() => {
+            new Chart(document.getElementById('displayChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Full Screen', 'Half Page', 'Billboard', 'Skyscraper*'],
+                    datasets: [{
+                        label: 'CTR',
+                        data: [2.09, 0.95, 0.51, 0.46],
+                        backgroundColor: ['#fbbc04', '#fbbc04', 'rgba(251, 188, 4, 0.45)', 'rgba(251, 188, 4, 0.45)'],
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        maxBarThickness: 36
+                    }]
+                },
+                options: baseOptions('Hero Display CTR by Format', {
+                    horizontal: true,
+                    tick: v => v + '%',
+                    tooltip: c => {
+                        const detail = ['877 clicks / 42,041 impr.', '7,819 clicks / 824,249 impr.', '234 clicks / 45,772 impr.', '~93 clicks / ~20,086 impr. (calc)'][c.dataIndex];
+                        return [`CTR: ${c.parsed.x}%`, detail];
+                    },
+                    annotations: { avg: refLine(0.97, 'Campaign avg 0.97%', true) }
+                })
+            });
+        })();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>September 2026 Social Media Analysis | DCT Abu Dhabi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        /* SONER Logo Animation */
+        @keyframes sonerScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes sonerBlip { 0%, 20%, 100% { opacity: 0; } 2%, 15% { opacity: 1; } 3% { transform: scale(1.2); } }
+
+        .soner-logo { display: flex; align-items: center; color: white; font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 300; }
+        .soner-radar { width: 24px; height: 24px; border-radius: 50%; border: 1px solid white; margin: 0 3px; position: relative; background-color: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        .soner-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: sonerScan 4s linear infinite; transform-origin: center; }
+        .soner-scanner::before { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 50%; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)); transform-origin: bottom left; clip-path: polygon(0 0, 100% 0, 0 100%); }
+        .soner-scanner::after { content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 1)); transform-origin: left center; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+        .soner-blip { position: absolute; width: 2px; height: 2px; background-color: white; border-radius: 50%; opacity: 0; box-shadow: 0 0 4px white; }
+        .soner-blip:nth-child(1) { top: 25%; left: 30%; animation: sonerBlip 4s 1s infinite; }
+        .soner-blip:nth-child(2) { top: 65%; left: 60%; animation: sonerBlip 4s 2.5s infinite; }
+        .soner-tagline { color: white; font-size: 8px; text-transform: uppercase; font-weight: 500; letter-spacing: 0.5em; margin-left: 10px; opacity: 0.8; }
+
+        :root {
+            --primary: #4285f4;
+            --primary-light: #1a2233;
+            --primary-dark: #8ab4f8;
+            --secondary: #34a853;
+            --warning: #fbbc04;
+            --danger: #ea4335;
+            --gray-100: #1e1e1e;
+            --gray-200: #2d2d2d;
+            --gray-300: #3d3d3d;
+            --gray-400: #4d4d4d;
+            --gray-500: #777777;
+            --gray-600: #a0a0a0;
+            --gray-700: #c0c0c0;
+            --bg-color: #000000;
+            --card-bg: #121212;
+            --section-bg: #181818;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            background: linear-gradient(135deg, #1a73e8, #174ea6);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 600; line-height: 1.2; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px; }
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 40px 0 25px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        .section > h2:first-child { margin-top: 0; }
+        h3 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin: 30px 0 18px;
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .main-section-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 30px;
+            transition: color 0.2s ease;
+        }
+        .main-section-header:hover { color: var(--primary-dark); }
+        .main-section-header:after {
+            content: '\f078';
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+        }
+        .main-section-header.collapsed:after { transform: translateY(-50%) rotate(-90deg); }
+        .main-section-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+            max-height: 9999px;
+            opacity: 1;
+        }
+        .main-section-content.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+
+        .lead { color: #ffffff; font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; }
+        .lead strong { color: var(--primary-dark); }
+        .note { color: var(--gray-600); font-size: 0.85rem; margin-top: 8px; }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(66, 133, 244, 0.3); }
+        .metric-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .metric-label { font-size: 0.95rem; color: #ffffff; line-height: 1.5; }
+        .metric-sublabel { font-size: 0.85rem; color: var(--gray-600); margin-top: 5px; }
+
+        .chart-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid var(--gray-300);
+            position: relative;
+            height: 400px;
+        }
+        .charts-row { display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0; }
+        .charts-row .chart-container { flex: 1; min-width: 300px; margin: 0; transition: all 0.3s ease; }
+        .charts-row .chart-container:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); }
+
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        thead tr { background-color: var(--gray-200); border-bottom: 2px solid var(--primary); }
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-dark);
+            border-right: 1px solid var(--gray-300);
+        }
+        th:last-child { border-right: none; }
+        td { padding: 15px; border-bottom: 1px solid var(--gray-300); border-right: 1px solid var(--gray-300); }
+        td:last-child { border-right: none; }
+        td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: var(--gray-200); }
+        tr.total-row td { font-weight: 700; background-color: var(--gray-100); }
+
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+        .tier-uae { background-color: rgba(234, 67, 53, 0.2); color: #ea4335; }
+        .tier-t1 { background-color: rgba(66, 133, 244, 0.2); color: #4285f4; }
+        .tier-t2 { background-color: rgba(52, 168, 83, 0.2); color: #34a853; }
+        .tier-warn { background-color: rgba(251, 188, 4, 0.2); color: #fbbc04; }
+
+        .positive { color: var(--secondary); font-weight: bold; }
+        .negative { color: var(--danger); font-weight: bold; }
+        .neutral { color: var(--warning); font-weight: bold; }
+
+        .heat-positive-2 { background-color: rgba(52, 168, 83, 0.14); }
+        .heat-positive-4 { background-color: rgba(52, 168, 83, 0.30); }
+        .heat-negative-2 { background-color: rgba(234, 67, 53, 0.14); }
+        .heat-negative-4 { background-color: rgba(234, 67, 53, 0.30); }
+
+        .calc { color: var(--gray-500); font-size: 0.75rem; font-weight: 500; }
+
+        /* Insight cards */
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .quadrant-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid var(--gray-300);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .quadrant-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .quadrant-card { display: flex; flex-direction: column; }
+        .quadrant-card .quadrant-action { margin-top: auto; }
+        .quadrant-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+        .quadrant-card.stars { border-color: var(--secondary); background: linear-gradient(135deg, rgba(52, 168, 83, 0.05), var(--card-bg)); }
+        .quadrant-card.premium { border-color: var(--warning); background: linear-gradient(135deg, rgba(251, 188, 4, 0.05), var(--card-bg)); }
+        .quadrant-card.watch { border-color: var(--primary); background: linear-gradient(135deg, rgba(66, 133, 244, 0.05), var(--card-bg)); }
+        .quadrant-card.flagged { border-color: var(--danger); background: linear-gradient(135deg, rgba(234, 67, 53, 0.05), var(--card-bg)); }
+        .quadrant-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .quadrant-header i { font-size: 1.5rem; }
+        .stars .quadrant-header i { color: var(--secondary); }
+        .premium .quadrant-header i { color: var(--warning); }
+        .watch .quadrant-header i { color: var(--primary); }
+        .flagged .quadrant-header i { color: var(--danger); }
+        .quadrant-title { font-weight: 700; font-size: 0.95rem; flex: 1; }
+        .quadrant-description { color: var(--gray-600); font-size: 0.9rem; margin-bottom: 10px; }
+        .quadrant-action { font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; }
+        .stars .quadrant-action { background-color: rgba(52, 168, 83, 0.15); color: var(--secondary); }
+        .premium .quadrant-action { background-color: rgba(251, 188, 4, 0.15); color: var(--warning); }
+        .watch .quadrant-action { background-color: rgba(66, 133, 244, 0.15); color: var(--primary); }
+        .flagged .quadrant-action { background-color: rgba(234, 67, 53, 0.15); color: var(--danger); }
+
+        /* Inconsistency cards */
+        .flagged-market-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .flagged-market-card.minor { border-color: var(--warning); }
+        .flagged-market-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .flagged-market-header h4 { color: #ffffff; margin: 0; font-size: 1.1rem; }
+        .issue-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-300); flex-wrap: wrap; }
+        .issue-row:last-child { border-bottom: none; }
+        .issue-label { font-weight: 600; color: var(--gray-600); min-width: 140px; }
+        .issue-value { font-weight: 600; }
+        .flagged-market-recommendation {
+            background-color: rgba(251, 188, 4, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+
+        ul.plain { list-style: none; }
+        ul.plain li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--gray-300); color: var(--gray-700); }
+        ul.plain li:last-child { border-bottom: none; }
+        ul.plain li i { position: absolute; left: 0; top: 13px; color: var(--primary-dark); font-size: 0.9rem; }
+
+        footer {
+            background-color: var(--gray-100);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--gray-300);
+            color: #ffffff;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .quadrant-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .section { padding: 20px; }
+            .metric-grid { grid-template-columns: 1fr 1fr; }
+            .metric-value { font-size: 1.6rem; }
+            .charts-row .chart-container { min-width: 100%; }
+            .quadrant-grid.cols-3 { grid-template-columns: 1fr; }
+            th, td { padding: 10px; font-size: 0.9rem; }
+        }
+    </style>
+    <style>
+        .rtl { direction: rtl; text-align: right; font-size: 1.05rem; color: #ffffff; margin-bottom: 10px; }
+        .gloss { color: var(--gray-600); font-size: 0.85rem; font-style: italic; }
+        code { font-family: ui-monospace, Menlo, monospace; font-size: 0.85em; color: var(--gray-700); background-color: var(--gray-200); padding: 1px 5px; border-radius: 4px; }
+        .split-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 25px 0; }
+        .split-card { background-color: var(--card-bg); border: 1px solid var(--gray-300); border-radius: 10px; padding: 25px; }
+        .split-card h4 { font-size: 1.15rem; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+        .split-card .kicker { color: var(--gray-600); font-size: 0.85rem; margin-bottom: 18px; }
+        .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .mini-grid .metric-card { padding: 16px 10px; }
+        .mini-grid .metric-value { font-size: 1.5rem; margin-bottom: 4px; }
+        .export { color: var(--secondary); font-size: 0.75rem; font-weight: 500; }
+        .pp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .pp-card { background-color: var(--card-bg); border: 1px solid var(--gray-300); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .pp-head { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+        .pp-head i { font-size: 1.3rem; color: var(--primary-dark); }
+        .pp-head .pp-basis { margin-left: auto; font-size: 0.75rem; font-weight: 500; color: var(--gray-600); }
+        .pp-row { border-radius: 8px; padding: 12px 14px; border-left: 4px solid; }
+        .pp-row.top { background-color: rgba(52, 168, 83, 0.10); border-color: var(--secondary); }
+        .pp-row.least { background-color: rgba(234, 67, 53, 0.10); border-color: var(--danger); }
+        .pp-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+        .pp-row.top .pp-label { color: var(--secondary); }
+        .pp-row.least .pp-label { color: var(--danger); }
+        .pp-name { color: #ffffff; font-size: 0.92rem; margin: 2px 0 4px; line-height: 1.4; }
+        .pp-value { font-size: 1.35rem; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; }
+        .pp-value small { font-size: 0.8rem; font-weight: 500; color: var(--gray-600); }
+        .pp-gap { margin-top: auto; font-size: 0.85rem; color: var(--gray-700); }
+        .pp-gap strong { color: var(--primary-dark); }
+        @media screen and (max-width: 1100px) { .pp-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) { .pp-grid { grid-template-columns: 1fr; } }
+        @media screen and (max-width: 900px) {
+            .split-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 480px) {
+            .mini-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
+                <div class="soner-logo">
+                    S<div class="soner-radar">
+                        <div class="soner-scanner"></div>
+                        <div class="soner-blip"></div>
+                        <div class="soner-blip"></div>
+                    </div>NER
+                    <span class="soner-tagline">Strategic Intelligence</span>
+                </div>
+            </div>
+            <h1>September 2026 Social Media Analysis</h1>
+            <p class="subtitle">Zayed National Museum · Instagram · LinkedIn · TikTok · Facebook · X · YouTube</p>
+            <p>Social media monthly report, September 2026 (Sprinklr and native platforms) | Figures marked <em>calc</em> are calculated from the deck's figures</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- EXECUTIVE SUMMARY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-chart-line"></i> Executive Summary</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    The Museum gained <strong>6,290 followers</strong> (+131% on August) and <strong>25,902 interactions</strong> (+42%) from
+                    150 pieces. The headline <strong>0.18% engagement rate is a TikTok effect</strong>: TikTok, which includes paid activity,
+                    made 98% of impressions. Without it, the organic channels engage at <strong>2.39%</strong>, inside the 1–5% benchmark.
+                    LinkedIn and Instagram drove growth, and Instagram is where the conversation happens.
+                </p>
+
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">6,290</div>
+                        <div class="metric-label">New Followers</div>
+                        <div class="metric-sublabel">+131% vs August · 110,163 total</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">14.36M</div>
+                        <div class="metric-label">Impressions</div>
+                        <div class="metric-sublabel">98.3% from TikTok <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">25,902</div>
+                        <div class="metric-label">Interactions</div>
+                        <div class="metric-sublabel">+42% vs August</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">2.39%</div>
+                        <div class="metric-label">Engagement Rate without TikTok</div>
+                        <div class="metric-sublabel">0.18% with TikTok · 1.95% also without LinkedIn's paid post <span class="calc">calc</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">150</div>
+                        <div class="metric-label">Content Pieces</div>
+                        <div class="metric-sublabel">81 on Instagram (66 Stories)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">1,148</div>
+                        <div class="metric-label">Comments</div>
+                        <div class="metric-sublabel">2,348 mentions, 289 verified</div>
+                    </div>
+                </div>
+
+                <div class="quadrant-grid">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-trophy"></i><span class="quadrant-title">Biggest win</span></div>
+                        <p class="quadrant-description">LinkedIn (2,792) and Instagram (2,164) brought 79% of new followers. Instagram has the best clean engagement rate (2.18%); LinkedIn's 5.20% is lifted by paid engagement.</p>
+                        <div class="quadrant-action">Keep LinkedIn and Instagram as growth channels</div>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-circle-exclamation"></i><span class="quadrant-title">Biggest gap</span></div>
+                        <p class="quadrant-description">Carousels were the weakest post on five of six platforms, and Facebook, X and YouTube took 32% of output for 1% of interactions.</p>
+                        <div class="quadrant-action">Rethink carousels and low-return channels</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-question-circle"></i><span class="quadrant-title">Biggest unknown</span></div>
+                        <p class="quadrant-description">Sprinklr can't separate organic from paid on some platforms, so TikTok and LinkedIn include paid activity, and the top post overall is a paid TikTok ad.</p>
+                        <div class="quadrant-action">Report organic where possible, label the rest</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLATFORMS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-layer-group"></i> Platform Performance</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    <strong>LinkedIn, Instagram and X</strong> meet or beat the 1% benchmark, though LinkedIn's 5.20% falls to about 1.6% without paid engagement. TikTok's 0.14% reflects its very high,
+                    partly paid view volume rather than weak content. <strong>Facebook, X and YouTube</strong> made 48 of the 150 pieces but
+                    only 235 interactions.
+                </p>
+                <div class="charts-row">
+                    <div class="chart-container" style="height: 360px;"><canvas id="rateChart"></canvas></div>
+                    <div class="chart-container" style="height: 360px;"><canvas id="returnChart"></canvas></div>
+                </div>
+
+                <h3>Platform Scorecard</h3>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Platform</th><th class="num">New followers</th><th class="num">Pieces</th><th class="num">Impressions</th><th class="num">Interactions</th><th class="num">Engagement rate</th><th class="num">Video views</th><th class="num">Interactions per piece <span class="calc">calc</span></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>LinkedIn</td><td class="num heat-positive-4">2,792</td><td class="num">14</td><td class="num">29,798</td><td class="num">1,550</td><td class="num heat-positive-4">5.20%</td><td class="num">273,704*</td><td class="num heat-positive-2">111</td></tr>
+                        <tr><td>Instagram <span class="note">organic</span></td><td class="num heat-positive-2">2,164</td><td class="num">81</td><td class="num">186,679</td><td class="num">4,065</td><td class="num heat-positive-2">2.18%</td><td class="num">26,703</td><td class="num">50</td></tr>
+                        <tr><td>TikTok†</td><td class="num">763</td><td class="num">7</td><td class="num">14,114,799</td><td class="num">20,052</td><td class="num heat-negative-2">0.14%</td><td class="num">14,114,799</td><td class="num">2,865</td></tr>
+                        <tr><td>Facebook</td><td class="num">429</td><td class="num">14</td><td class="num">15,740</td><td class="num">110</td><td class="num heat-negative-2">0.70%</td><td class="num">7,218</td><td class="num heat-negative-2">8</td></tr>
+                        <tr><td>X</td><td class="num">129</td><td class="num">28</td><td class="num">10,166</td><td class="num">108</td><td class="num">1.06%</td><td class="num">804</td><td class="num heat-negative-4">4</td></tr>
+                        <tr><td>YouTube</td><td class="num">13</td><td class="num">6</td><td class="num">2,487</td><td class="num">17</td><td class="num heat-negative-2">0.68%</td><td class="num">881</td><td class="num heat-negative-4">3</td></tr>
+                        <tr class="total-row"><td>Total</td><td class="num">6,290</td><td class="num">150</td><td class="num">14,359,669</td><td class="num">25,902</td><td class="num">0.18%</td><td class="num">14,424,109</td><td class="num">173</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">*LinkedIn mixes organic and paid: its impressions exclude the paid ad, but its video views (including 238,628 paid) and interactions on the paid Member September Animation include it. Without that post's interactions, LinkedIn's rate is about 1.6% <span class="calc">calc</span>. †Organic and paid combined; TikTok's impressions are its video views. Engagement rate is interactions ÷ impressions.</p>
+            </div>
+        </section>
+
+        <!-- INSTAGRAM -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fab fa-instagram"></i> Instagram: The Community Hub</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Instagram made <strong>84% of all comments</strong> and nearly tripled its follower growth on August. A feed post earned
+                    about <strong>184 interactions against 20 for a Story</strong>. The UGC static was the top feed post, and The Grove teaser
+                    the top Story.
+                </p>
+                <div class="split-grid">
+                    <div class="split-card">
+                        <h4><span class="swatch" style="background:#4285f4"></span> Feed posts</h4>
+                        <p class="kicker">15 posts · top: UGC static (534) · weakest: Clay Boat Models carousel (66)</p>
+                        <div class="mini-grid">
+                            <div class="metric-card"><div class="metric-value">94.8K</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric-card"><div class="metric-value">2,763</div><div class="metric-label">Engagements</div></div>
+                            <div class="metric-card"><div class="metric-value">2.91%</div><div class="metric-label">Rate <span class="calc">calc</span></div></div>
+                        </div>
+                    </div>
+                    <div class="split-card">
+                        <h4><span class="swatch" style="background:#777777"></span> Stories</h4>
+                        <p class="kicker">66 Stories · top: The Grove teaser (87), welcome (80), AI Emirati Mother's Lullaby (70)</p>
+                        <div class="mini-grid">
+                            <div class="metric-card"><div class="metric-value">91.9K</div><div class="metric-label">Impressions</div></div>
+                            <div class="metric-card"><div class="metric-value">1,302</div><div class="metric-label">Engagements</div></div>
+                            <div class="metric-card"><div class="metric-value">1.42%</div><div class="metric-label">Rate <span class="calc">calc</span></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Daily programme Stories underperform</h4><span class="tier-badge tier-warn">Format fix</span></div>
+                    <div class="issue-row"><span class="issue-label">19 daily programme Stories</span><span class="issue-value">8 interactions each on average</span></div>
+                    <div class="issue-row"><span class="issue-label">Other 47 Stories</span><span class="issue-value">about 24 each; top three 70–87</span></div>
+                    <div class="flagged-market-recommendation">The deck suggests opening each day's programme with a cover Story that carries a poll, question or link sticker.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- POSTS & THEMES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-star"></i> Top Posts &amp; Content Themes</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    <strong>People-led stories and launch teasers</strong> led their platforms. <strong>Carousels were the weakest post on five
+                    of six platforms</strong>, and Member September worked as video but not as a carousel.
+                </p>
+                <div class="pp-grid">
+                    <div class="pp-card">
+                        <div class="pp-head"><i class="fab fa-tiktok"></i>TikTok<span class="pp-basis">ranked by views</span></div>
+                        <div class="pp-row top"><div class="pp-label">&#9650; Top-performing</div><div class="pp-name">Emirati Women Police video <span class="tier-badge tier-warn">Paid ad</span></div><div class="pp-value">5.5M <small>views · 10,303 interactions</small></div></div>
+                        <div class="pp-row least"><div class="pp-label">&#9660; Least-performing</div><div class="pp-name">After School Programmes carousel</div><div class="pp-value">346 <small>views</small></div></div>
+                        <div class="pp-gap">Top post got <strong>15,915×</strong> the views of the least <span class="calc">calc</span></div>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-head"><i class="fab fa-linkedin"></i>LinkedIn<span class="pp-basis">ranked by interactions</span></div>
+                        <div class="pp-row top"><div class="pp-label">&#9650; Top-performing</div><div class="pp-name">Member September Animation</div><div class="pp-value">1,075 <small>interactions</small></div></div>
+                        <div class="pp-row least"><div class="pp-label">&#9660; Least-performing</div><div class="pp-name">Member September Breakfast carousel</div><div class="pp-value">11 <small>interactions</small></div></div>
+                        <div class="pp-gap">Top post got <strong>98×</strong> the interactions of the least <span class="calc">calc</span></div>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-head"><i class="fab fa-instagram"></i>Instagram<span class="pp-basis">ranked by interactions</span></div>
+                        <div class="pp-row top"><div class="pp-label">&#9650; Top-performing</div><div class="pp-name">UGC static</div><div class="pp-value">534 <small>interactions</small></div></div>
+                        <div class="pp-row least"><div class="pp-label">&#9660; Least-performing</div><div class="pp-name">Clay Boat Models carousel</div><div class="pp-value">66 <small>interactions</small></div></div>
+                        <div class="pp-gap">Top post got <strong>8×</strong> the interactions of the least <span class="calc">calc</span></div>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-head"><i class="fab fa-youtube"></i>YouTube<span class="pp-basis">ranked by views</span></div>
+                        <div class="pp-row top"><div class="pp-label">&#9650; Top-performing</div><div class="pp-name">Member September Short</div><div class="pp-value">320 <small>views</small></div></div>
+                        <div class="pp-row least"><div class="pp-label">&#9660; Least-performing</div><div class="pp-name">The Grove Short</div><div class="pp-value">11 <small>views</small></div></div>
+                        <div class="pp-gap">Top post got <strong>29×</strong> the views of the least <span class="calc">calc</span></div>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-head"><i class="fab fa-facebook"></i>Facebook<span class="pp-basis">ranked by interactions</span></div>
+                        <div class="pp-row top"><div class="pp-label">&#9650; Top-performing</div><div class="pp-name">The Grove Reel</div><div class="pp-value">17 <small>interactions</small></div></div>
+                        <div class="pp-row least"><div class="pp-label">&#9660; Least-performing</div><div class="pp-name">Sheikh Zayed Quote carousel <span class="tier-badge tier-uae">Lowest overall</span></div><div class="pp-value">3 <small>interactions</small></div></div>
+                        <div class="pp-gap">Top post got <strong>5.7×</strong> the interactions of the least <span class="calc">calc</span></div>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-head"><i class="fab fa-twitter"></i>X<span class="pp-basis">ranked by interactions</span></div>
+                        <div class="pp-row top"><div class="pp-label">&#9650; Top-performing</div><div class="pp-name">Int&#39;l Day of Sign Languages · Favourite Object reel</div><div class="pp-value">14 <small>interactions</small></div></div>
+                        <div class="pp-row least"><div class="pp-label">&#9660; Least-performing</div><div class="pp-name">Member September Breakfast carousel</div><div class="pp-value">4 <small>interactions</small></div></div>
+                        <div class="pp-gap">Top post got <strong>3.5×</strong> the interactions of the least <span class="calc">calc</span></div>
+                    </div>
+                </div>
+                <p class="note">Posts are as the deck ranks them on each platform: by interactions on LinkedIn, Instagram, Facebook and X, and by views on TikTok and YouTube. Carousels were the least-performing post on five of the six platforms. The Emirati Women Police video is one of the two best Evergreen Awareness TikTok creatives in the September paid media report. It made 51% of TikTok's interactions and 40% of all interactions <span class="calc">calc</span>, but the decks don't show how much came from paid delivery.</p>
+
+                <h3>Content Themes</h3>
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-user-group"></i><span class="quadrant-title">People-led stories</span></div>
+                        <p class="quadrant-description">Emirati Women Police (TikTok, top post overall) and the Favourite Object reel (X, top post).</p>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-mug-hot"></i><span class="quadrant-title">Launch teasers</span></div>
+                        <p class="quadrant-description">The Grove led Instagram Stories and Facebook. Its YouTube Short was the weakest there (11 views).</p>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-camera"></i><span class="quadrant-title">User-generated content</span></div>
+                        <p class="quadrant-description">A UGC static was Instagram's top feed post, with 534 interactions.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-id-card"></i><span class="quadrant-title">Member September</span></div>
+                        <p class="quadrant-description">Top post as an animation (LinkedIn) and a Short (YouTube), but the weakest post as a carousel on X and LinkedIn.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-images"></i><span class="quadrant-title">Carousels</span></div>
+                        <p class="quadrant-description">Weakest post on Instagram, Facebook, X, LinkedIn and TikTok. The Sheikh Zayed Quote carousel (3) was the lowest of the month.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fas fa-wand-magic-sparkles"></i><span class="quadrant-title">AI-led cultural content</span></div>
+                        <p class="quadrant-description">The AI Emirati Mother's Lullaby was Instagram's third-best Story (70 engagements).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-comments"></i> Community</h2>
+            <div class="main-section-content">
+                <p class="lead">
+                    Sentiment was <strong>92.5% neutral, 7.3% positive</strong>, with only 2 negative comments. LinkedIn had the highest positive
+                    share (19.6%). <strong>95% of comments are "General"</strong>, so the category split says little about what audiences want.
+                </p>
+                <div class="charts-row">
+                    <div class="chart-container" style="height: 340px;"><canvas id="commentsChart"></canvas></div>
+                </div>
+                <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Platform</th><th class="num">Comments</th><th class="num">Neutral</th><th class="num">Positive</th><th class="num">Negative</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Instagram</td><td class="num">960</td><td class="num">97.19%</td><td class="num">2.81%</td><td class="num">0%</td></tr>
+                        <tr><td>LinkedIn</td><td class="num">56</td><td class="num">80.36%</td><td class="num heat-positive-4">19.64%</td><td class="num">0%</td></tr>
+                        <tr><td>X</td><td class="num">37</td><td class="num">89.19%</td><td class="num">8.11%</td><td class="num heat-negative-2">2.70%</td></tr>
+                        <tr><td>TikTok</td><td class="num">35</td><td class="num">60%</td><td class="num heat-positive-4">40%</td><td class="num">0%</td></tr>
+                        <tr><td>Facebook</td><td class="num">26</td><td class="num">100%</td><td class="num">0%</td><td class="num">0%</td></tr>
+                        <tr class="total-row"><td>All (incl. 33 Google Reviews, 1 YouTube)</td><td class="num">1,148</td><td class="num">92.51%</td><td class="num">7.32%</td><td class="num">0.17%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="note">Categories: General 1,095, Events 21, Spam 16, News 11, Employee-related 2, Complaints 2, Partnerships 1. TikTok's 40% positive rests on 35 comments. Mentions (2,348, of which 289 verified) are a separate measure from comments.</p>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-lightbulb"></i> Key Insights</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-seedling"></i><span class="quadrant-title">Organic channels are healthy</span></div>
+                        <p class="quadrant-description">Without TikTok, the five organic channels engage at 2.39%, 13 times the headline rate.</p>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-user-plus"></i><span class="quadrant-title">Growth is concentrated</span></div>
+                        <p class="quadrant-description">LinkedIn, Instagram and TikTok made 91% of new followers.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fab fa-linkedin"></i><span class="quadrant-title">LinkedIn's 5.20% is lifted by paid</span></div>
+                        <p class="quadrant-description">Paid interactions divided by organic impressions. Without the paid Member September Animation, the rate is about 1.6%, below Instagram's 2.18%.</p>
+                    </div>
+                    <div class="quadrant-card watch">
+                        <div class="quadrant-header"><i class="fab fa-tiktok"></i><span class="quadrant-title">TikTok reach rests on paid</span></div>
+                        <p class="quadrant-description">98% of impressions from 7 pieces. The top video was a paid creative and made 40% of all interactions.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-images"></i><span class="quadrant-title">Carousels underperform</span></div>
+                        <p class="quadrant-description">Weakest post on five of six platforms. The same Member September content worked as video.</p>
+                    </div>
+                    <div class="quadrant-card flagged">
+                        <div class="quadrant-header"><i class="fas fa-scale-unbalanced"></i><span class="quadrant-title">Low-return channels</span></div>
+                        <p class="quadrant-description">Facebook, X and YouTube made 48 of 150 pieces (32%) and 235 interactions (about 1%).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPPORTUNITIES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-rocket"></i> Opportunities</h2>
+            <div class="main-section-content">
+                <div class="quadrant-grid cols-3">
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-user-group"></i><span class="quadrant-title">People-led storytelling</span></div>
+                        <p class="quadrant-description">Keep featuring museum staff and experts, following Emirati Women Police and the Favourite Object reel.</p>
+                        <div class="quadrant-action">From the deck</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-camera"></i><span class="quadrant-title">More UGC on Instagram</span></div>
+                        <p class="quadrant-description">The UGC static was the top feed post, with the highest engagement rate of any feed post.</p>
+                        <div class="quadrant-action">From the deck</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-bullhorn"></i><span class="quadrant-title">Teaser-led rollouts</span></div>
+                        <p class="quadrant-description">Build up new on-site experiences the way The Grove was teased.</p>
+                        <div class="quadrant-action">From the deck</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fas fa-square-poll-vertical"></i><span class="quadrant-title">Interactive daily Stories</span></div>
+                        <p class="quadrant-description">Open each day's programme with a cover Story carrying a poll, question or link sticker.</p>
+                        <div class="quadrant-action">From the deck</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fab fa-tiktok"></i><span class="quadrant-title">Native TikTok content</span></div>
+                        <p class="quadrant-description">Keep making platform-native videos alongside high-reach assets; smaller videos engaged at over 3%.</p>
+                        <div class="quadrant-action">From the deck</div>
+                    </div>
+                    <div class="quadrant-card stars">
+                        <div class="quadrant-header"><i class="fab fa-linkedin"></i><span class="quadrant-title">LinkedIn for institution and membership</span></div>
+                        <p class="quadrant-description">Keep LinkedIn for milestones and membership, and Instagram as the community platform.</p>
+                        <div class="quadrant-action">From the deck</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-code-branch"></i><span class="quadrant-title">Organic where possible, labelled where not</span></div>
+                        <p class="quadrant-description">Report organic-only figures for every platform where Sprinklr can separate them, and label the rest (such as TikTok) "organic + paid". Flag paid posts among top posts.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-film"></i><span class="quadrant-title">Turn carousels into video</span></div>
+                        <p class="quadrant-description">Convert carousel content to short video where possible, given Member September's results.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-recycle"></i><span class="quadrant-title">Repurpose for low-return channels</span></div>
+                        <p class="quadrant-description">Adapt content for Facebook, X and YouTube instead of making it specially, given 32% of output for 1% of interactions.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-ruler"></i><span class="quadrant-title">One definition of impressions</span></div>
+                        <p class="quadrant-description">Label TikTok's figure as views, so totals don't mix views with impressions.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-tags"></i><span class="quadrant-title">Split "General" comments</span></div>
+                        <p class="quadrant-description">Break the 95% "General" into topics such as tickets, opening hours, directions and praise.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                    <div class="quadrant-card premium">
+                        <div class="quadrant-header"><i class="fas fa-spell-check"></i><span class="quadrant-title">Fix comment and mention labels</span></div>
+                        <p class="quadrant-description">Call the 1,148 "comments" throughout, and keep mentions as their own measure.</p>
+                        <div class="quadrant-action">New suggestion</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INCONSISTENCIES -->
+        <section class="section">
+            <h2 class="main-section-header"><i class="fas fa-triangle-exclamation"></i> Data Inconsistencies</h2>
+            <div class="main-section-content">
+                <p class="lead">The deck's arithmetic is correct: platforms add up to every total, and every engagement rate recalculates. These points concern what the figures include.</p>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>LinkedIn mixes organic impressions with paid views and interactions</h4><span class="tier-badge tier-uae">Rate overstated</span></div>
+                    <div class="issue-row"><span class="issue-label">Impressions</span><span class="issue-value">29,798 in the deck against 737,776 paid: paid excluded</span></div>
+                    <div class="issue-row"><span class="issue-label">Video views</span><span class="issue-value">273,704 in the deck against 238,628 paid: paid included (about 35.1K left)</span></div>
+                    <div class="issue-row"><span class="issue-label">Top post</span><span class="issue-value">Member September Animation, the paid creative: 1,075 of 1,550 interactions, about 50% of an average post's ~2.1K organic impressions</span></div>
+                    <div class="flagged-market-recommendation">Sprinklr appears to separate LinkedIn impressions but not the boosted post's views and interactions, so the 5.20% rate divides paid-inclusive interactions by organic impressions. Without that post, LinkedIn engages at about 1.6% <span class="calc">calc</span>. Label LinkedIn as partly paid, as the deck does for TikTok.</div>
+                </div>
+
+                <div class="flagged-market-card">
+                    <div class="flagged-market-header"><h4>TikTok "impressions" are views, and can't be compared with paid</h4><span class="tier-badge tier-uae">Different measures</span></div>
+                    <div class="issue-row"><span class="issue-label">Social deck</span><span class="issue-value">14,114,799 impressions and 14,114,799 video views (organic and paid)</span></div>
+                    <div class="issue-row"><span class="issue-label">Paid media report</span><span class="issue-value">19.9M paid TikTok impressions, more than the social deck's total</span></div>
+                    <div class="flagged-market-recommendation">The decks use views in one and ad impressions in the other, so the figures can't be added or compared.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>The top post overall is a paid ad</h4><span class="tier-badge tier-warn">Label</span></div>
+                    <div class="issue-row"><span class="issue-label">Emirati Women Police</span><span class="issue-value">10,303 interactions, 40% of the month's total; a top paid Evergreen Awareness creative</span></div>
+                    <div class="flagged-market-recommendation">Flag paid assets when naming top posts.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>Comments labelled as mentions</h4><span class="tier-badge tier-warn">Label</span></div>
+                    <div class="issue-row"><span class="issue-label">Slide 5</span><span class="issue-value">Calls 1,062 neutral items "mentions"; the breakdowns add up to 1,148 comments</span></div>
+                    <div class="issue-row"><span class="issue-label">Google Reviews</span><span class="issue-value">33 of the 1,148 come from Google Reviews, not a reported channel</span></div>
+                    <div class="flagged-market-recommendation">Keep comments and mentions separate, and show Google Reviews on their own line.</div>
+                </div>
+
+                <div class="flagged-market-card minor">
+                    <div class="flagged-market-header"><h4>August changes unlabelled</h4><span class="tier-badge tier-warn">Can't check</span></div>
+                    <div class="issue-row"><span class="issue-label">Slide 3</span><span class="issue-value">+131%, −1%, −0.04%, +2%, +42%, +42%; not all match a stated metric, and August figures aren't in the deck</span></div>
+                    <div class="flagged-market-recommendation">Label each change and include the August base figures.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHOD -->
+        <section class="section">
+            <h2 class="main-section-header collapsed"><i class="fas fa-circle-info"></i> Method &amp; Notes</h2>
+            <div class="main-section-content collapsed">
+                <ul class="plain">
+                    <li><i class="fas fa-file-powerpoint"></i>Source: Social Media Report - September 2026.pptx (32 slides), from Sprinklr with native-platform figures where Sprinklr lacked them.</li>
+                    <li><i class="fas fa-calculator"></i>Figures marked <em>calc</em> are calculated from the deck: shares, per-piece figures, Instagram feed and Story rates, and the rate without TikTok (5,850 interactions ÷ 244,870 impressions).</li>
+                    <li><i class="fas fa-file-invoice-dollar"></i>Paid comparisons come from the September 2026 paid media report.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p style="margin: 0; color: var(--gray-700); font-size: 0.9rem;">© 2026 Research & Insights Unit | Strategic Marketing & Communications | Department of Culture and Tourism – Abu Dhabi</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.main-section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+                const content = this.nextElementSibling;
+                if (content && content.classList.contains('main-section-content')) {
+                    content.classList.toggle('collapsed');
+                }
+            });
+        });
+
+        if (window['chartjs-plugin-annotation']) Chart.register(window['chartjs-plugin-annotation']);
+
+        // Draw charts once Inter has loaded, so axis labels are measured with the right font
+        document.fonts.ready.then(() => {
+
+        Chart.defaults.font.family = 'Inter, sans-serif';
+        Chart.defaults.color = '#c0c0c0';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) Chart.defaults.animation = false;
+
+        // Fixed colour per platform, used in every chart
+        const PL = {
+            'LinkedIn': '#4285f4',
+            'Instagram': '#f538a0',
+            'TikTok': '#24c1e0',
+            'Facebook': '#8ab4f8',
+            'X': '#a0a0a0',
+            'YouTube': '#ea4335'
+        };
+        const GREY = '#4d4d4d';
+
+        // Diagonal hatch for figures that include paid activity
+        function hatch(base, line) {
+            const c = document.createElement('canvas');
+            c.width = c.height = 10;
+            const g = c.getContext('2d');
+            g.fillStyle = base;
+            g.fillRect(0, 0, 10, 10);
+            g.strokeStyle = line;
+            g.lineWidth = 2;
+            g.beginPath();
+            g.moveTo(0, 10); g.lineTo(10, 0);
+            g.moveTo(-5, 5); g.lineTo(5, -5);
+            g.moveTo(5, 15); g.lineTo(15, 5);
+            g.stroke();
+            return g.createPattern(c, 'repeat');
+        }
+
+        // Writes each dataset's valueText at the end of its bars
+        const valueLabels = {
+            id: 'valueLabels',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                const horizontal = chart.options.indexAxis === 'y';
+                chart.data.datasets.forEach((ds, di) => {
+                    const meta = chart.getDatasetMeta(di);
+                    if (!ds.valueText || meta.hidden) return;
+                    meta.data.forEach((bar, i) => {
+                        const text = ds.valueText[i];
+                        if (!text) return;
+                        const { x, y } = bar.getProps(['x', 'y'], true);
+                        ctx.save();
+                        ctx.font = '600 12px Inter, sans-serif';
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
+                        ctx.fillStyle = '#ffffff';
+                        if (horizontal) { ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.strokeText(text, x + 6, y); ctx.fillText(text, x + 6, y); }
+                        else { ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.strokeText(text, x, y - 4); ctx.fillText(text, x, y - 4); }
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+
+        function baseOptions(title, opts = {}) {
+            // Only the value axis gets a custom tick format; the category axis keeps its labels
+            const valueTicks = { color: '#c0c0c0' };
+            if (opts.tick) valueTicks.callback = opts.tick;
+            const catTicks = { color: '#c0c0c0' };
+            const valueAxis = { grid: { display: true }, ticks: valueTicks, beginAtZero: true };
+            const catAxis = { grid: { display: false }, ticks: catTicks };
+            if (opts.grace) valueAxis.grace = opts.grace;
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: { left: 12, right: 12 } },
+                indexAxis: opts.horizontal ? 'y' : 'x',
+                plugins: {
+                    title: { display: true, text: title, color: '#8ab4f8', font: { size: 15, weight: 'bold' }, padding: { bottom: opts.subtitle ? 4 : 16 } },
+                    subtitle: { display: !!opts.subtitle, text: opts.subtitle || '', color: '#a0a0a0', font: { size: 12 }, padding: { bottom: 14 } },
+                    legend: { display: !!opts.legend, position: 'top', labels: { color: '#ffffff', font: { size: 12 }, boxWidth: 14 } },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                        titleColor: '#8ab4f8',
+                        bodyColor: '#ffffff',
+                        callbacks: opts.tooltip ? { label: opts.tooltip } : {}
+                    },
+                    annotation: { annotations: opts.annotations || {} }
+                },
+                scales: opts.horizontal ? { x: valueAxis, y: catAxis } : { x: catAxis, y: valueAxis }
+            };
+        }
+
+        function barDataset(values, colors, label, valueText) {
+            return { label: label || '', data: values, backgroundColor: colors, borderRadius: 4, borderSkipped: false, maxBarThickness: 36, valueText };
+        }
+
+        function refLine(value, text) {
+            return {
+                type: 'line', xMin: value, xMax: value,
+                borderColor: 'rgba(255, 255, 255, 0.45)', borderWidth: 2, borderDash: [5, 5],
+                label: { display: true, content: text, position: 'start', backgroundColor: 'rgba(0, 0, 0, 0.75)', color: '#ffffff', font: { size: 11 } }
+            };
+        }
+
+        // 1. Engagement rate by platform, 1% benchmark marked; TikTok hatched (includes paid)
+        (() => {
+            const labels = ['LinkedIn', 'Instagram', 'X', 'Facebook', 'YouTube', 'TikTok'];
+            const rate = [5.20, 2.18, 1.06, 0.70, 0.68, 0.14];
+            const detail = ['1,550 ÷ 29,798', '4,065 ÷ 186,679', '108 ÷ 10,166', '110 ÷ 15,740', '17 ÷ 2,487', '20,052 ÷ 14,114,799 (views)'];
+            const colors = labels.map(l => l === 'TikTok' ? hatch('#1a6f80', '#24c1e0') : PL[l]);
+            new Chart(document.getElementById('rateChart'), {
+                type: 'bar',
+                data: { labels, datasets: [barDataset(rate, colors, 'Engagement rate', rate.map(v => v.toFixed(2) + '%'))] },
+                options: baseOptions('Engagement rate by platform', {
+                    horizontal: true, grace: '10%',
+                    subtitle: 'Dashed line = 1% benchmark · LinkedIn includes paid interactions',
+                    tick: v => v + '%',
+                    tooltip: c => `Engagement rate: ${rate[c.dataIndex].toFixed(2)}% (${detail[c.dataIndex]})`,
+                    annotations: { bench: Object.assign(refLine(1, ''), { label: { display: false } }) }
+                }),
+                plugins: [valueLabels]
+            });
+        })();
+
+        // 2. Share of output vs share of interactions by platform
+        (() => {
+            const labels = ['Instagram', 'X', 'LinkedIn', 'Facebook', 'TikTok', 'YouTube'];
+            const pieces = [81, 28, 14, 14, 7, 6];
+            const inter = [4065, 108, 1550, 110, 20052, 17];
+            const pShare = pieces.map(v => +(100 * v / 150).toFixed(1));
+            const iShare = inter.map(v => +(100 * v / 25902).toFixed(1));
+            new Chart(document.getElementById('returnChart'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        barDataset(pShare, GREY, 'Share of content pieces', pShare.map(v => v.toFixed(1) + '%')),
+                        barDataset(iShare, labels.map(l => PL[l]), 'Share of interactions', iShare.map(v => v.toFixed(1) + '%'))
+                    ]
+                },
+                options: (() => {
+                    const o = baseOptions('Output vs return by platform', {
+                        horizontal: true, legend: true, grace: '12%',
+                        subtitle: 'Share of the 150 pieces vs share of 25,902 interactions · calc',
+                        tick: v => v + '%',
+                        tooltip: c => c.datasetIndex === 0
+                            ? `Pieces: ${pieces[c.dataIndex]} of 150 (${c.parsed.x}%)`
+                            : `Interactions: ${inter[c.dataIndex].toLocaleString()} of 25,902 (${c.parsed.x}%)`
+                    });
+                    o.plugins.legend.labels.generateLabels = () => [
+                        { text: 'Share of pieces (grey)', fillStyle: GREY, strokeStyle: GREY, fontColor: '#ffffff' },
+                        { text: 'Share of interactions (platform colour)', fillStyle: '#4285f4', strokeStyle: '#4285f4', fontColor: '#ffffff' }
+                    ];
+                    o.plugins.legend.onClick = null;
+                    return o;
+                })(),
+                plugins: [valueLabels]
+            });
+        })();
+
+        // 3. Comments by platform
+        (() => {
+            const labels = ['Instagram', 'LinkedIn', 'X', 'TikTok', 'Google Reviews', 'Facebook', 'YouTube'];
+            const vals = [960, 56, 37, 35, 33, 26, 1];
+            new Chart(document.getElementById('commentsChart'), {
+                type: 'bar',
+                data: { labels, datasets: [barDataset(vals, labels.map(l => PL[l] || '#777777'), 'Comments', vals.map(v => v.toLocaleString()))] },
+                options: baseOptions('Instagram: 84% of comments', {
+                    horizontal: true, grace: '10%',
+                    subtitle: '1,148 comments by platform',
+                    tooltip: c => `Comments: ${vals[c.dataIndex]} of 1,148 (${(100 * vals[c.dataIndex] / 1148).toFixed(1)}%)`
+                }),
+                plugins: [valueLabels]
+            });
+        })();
+        });
+    </script>
+</body>
+</html>
