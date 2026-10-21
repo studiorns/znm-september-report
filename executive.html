@@ -347,6 +347,15 @@
             .pager { grid-template-columns: 1fr; }
             .pager .next { align-items: flex-start; text-align: left; }
         }
+        .site-nav .nav-tools { margin-left: auto; display: flex; gap: 8px; }
+        .site-nav button { background: transparent; border: 1px solid var(--gray-300); color: var(--gray-700); border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .site-nav button:hover { border-color: var(--primary); color: #ffffff; }
+        @media print {
+            .site-nav, .pager { display: none !important; }
+            .main-section-content.collapsed { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
+            .main-section-header:after { display: none; }
+            .section { break-inside: avoid-page; }
+        }
     </style>
 </head>
 <body>
@@ -355,6 +364,10 @@
             <a href="index.html"><i class="fas fa-house"></i> All reports</a>
             <span class="sep"><i class="fas fa-chevron-right"></i></span>
             <span class="current" aria-current="page">Executive Summary</span>
+            <div class="nav-tools">
+                <button type="button" data-sections="expand"><i class="fas fa-angles-down"></i> Expand all</button>
+                <button type="button" data-sections="collapse"><i class="fas fa-angles-up"></i> Collapse all</button>
+            </div>
         </div>
     </nav>
     <header>
@@ -764,6 +777,21 @@
             });
         })();
         });
+    </script>
+    <script>
+        // Expand or collapse every section from the breadcrumb bar
+        document.querySelectorAll('[data-sections]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const collapse = btn.dataset.sections === 'collapse';
+                document.querySelectorAll('.main-section-header').forEach(h => {
+                    h.classList.toggle('collapsed', collapse);
+                    const c = h.nextElementSibling;
+                    if (c && c.classList.contains('main-section-content')) c.classList.toggle('collapsed', collapse);
+                });
+            });
+        });
+        // Open every section before printing
+        window.addEventListener('beforeprint', () => document.querySelector('[data-sections="expand"]').click());
     </script>
 </body>
 </html>

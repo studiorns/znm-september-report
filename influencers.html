@@ -322,6 +322,15 @@
             .pager { grid-template-columns: 1fr; }
             .pager .next { align-items: flex-start; text-align: left; }
         }
+        .site-nav .nav-tools { margin-left: auto; display: flex; gap: 8px; }
+        .site-nav button { background: transparent; border: 1px solid var(--gray-300); color: var(--gray-700); border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .site-nav button:hover { border-color: var(--primary); color: #ffffff; }
+        @media print {
+            .site-nav, .pager { display: none !important; }
+            .main-section-content.collapsed { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
+            .main-section-header:after { display: none; }
+            .section { break-inside: avoid-page; }
+        }
     </style>
 </head>
 <body>
@@ -330,6 +339,10 @@
             <a href="index.html"><i class="fas fa-house"></i> All reports</a>
             <span class="sep"><i class="fas fa-chevron-right"></i></span>
             <span class="current" aria-current="page">Influencers</span>
+            <div class="nav-tools">
+                <button type="button" data-sections="expand"><i class="fas fa-angles-down"></i> Expand all</button>
+                <button type="button" data-sections="collapse"><i class="fas fa-angles-up"></i> Collapse all</button>
+            </div>
         </div>
     </nav>
     <header>
@@ -423,8 +436,8 @@
 
         <!-- TWO PROGRAMMES -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-users"></i> Two Programmes Side by Side</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-users"></i> Two Programmes Side by Side</h2>
+            <div class="main-section-content collapsed">
                 <div class="split-grid">
                     <div class="split-card">
                         <h4><span class="swatch" style="background:#fa7b17"></span> Dedicated: Back to School</h4>
@@ -481,8 +494,8 @@
 
         <!-- EFFICIENCY -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-bullseye"></i> Content Efficiency</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-bullseye"></i> Content Efficiency</h2>
+            <div class="main-section-content collapsed">
                 <p class="lead">
                     Because the Dedicated posts sit largely inside Always-On, the programmes are compared <strong>by format</strong>, not
                     as totals. Dedicated content was <strong>90% Stories</strong> against 85% for Always-On. On measured posts (Reels,
@@ -518,8 +531,8 @@
 
         <!-- FORMAT -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-photo-film"></i> Always-On by Format</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-photo-film"></i> Always-On by Format</h2>
+            <div class="main-section-content collapsed">
                 <p class="lead">
                     Stories were <strong>85% of Always-On posts</strong> but recorded no interactions, and their impressions are
                     estimated, not measured. The <strong>29 Reels, Shorts and feed posts</strong> delivered 48% of impressions,
@@ -551,8 +564,8 @@
 
         <!-- CREATORS & MARKETS -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-earth-americas"></i> Always-On Creators &amp; Markets</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-earth-americas"></i> Always-On Creators &amp; Markets</h2>
+            <div class="main-section-content collapsed">
                 <p class="lead">
                     Creators based in the <strong>US and India delivered 85% of impressions</strong> from 18 of the 49 creators.
                     UAE creators made <strong>48% of posts but 11% of impressions</strong>, mostly stories from mid-sized accounts.
@@ -635,8 +648,8 @@
 
         <!-- CREATOR PATTERNS -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-people-arrows"></i> Always-On Creator Patterns</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-people-arrows"></i> Always-On Creator Patterns</h2>
+            <div class="main-section-content collapsed">
                 <p class="lead">
                     Only <strong>19 of September's 49 creators posted measured content</strong>: 28 Reels, Shorts, feed and TikTok
                     posts. The other 30 posted only Stories, which made 45.5% of impressions with no measured engagement. Measured
@@ -754,8 +767,8 @@
 
         <!-- DEEP DIVES -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-layer-group"></i> Programme Deep Dives</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-layer-group"></i> Programme Deep Dives</h2>
+            <div class="main-section-content collapsed">
 
                 <h3><i class="fas fa-school"></i> Dedicated: Back to School</h3>
                 <p class="lead">
@@ -800,8 +813,8 @@
 
         <!-- INSIGHTS -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-lightbulb"></i> Key Insights</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-lightbulb"></i> Key Insights</h2>
+            <div class="main-section-content collapsed">
                 <div class="quadrant-grid">
                     <div class="quadrant-card stars">
                         <div class="quadrant-header"><i class="fas fa-bullhorn"></i><span class="quadrant-title">Always-On carries the reach</span></div>
@@ -841,8 +854,8 @@
 
         <!-- OPPORTUNITIES -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-rocket"></i> Opportunities</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-rocket"></i> Opportunities</h2>
+            <div class="main-section-content collapsed">
                 <div class="quadrant-grid cols-3">
                     <div class="quadrant-card stars">
                         <div class="quadrant-header"><i class="fas fa-repeat"></i><span class="quadrant-title">Repeat the immersion event</span></div>
@@ -910,8 +923,8 @@
 
         <!-- THINGS TO WATCH -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-binoculars"></i> Things to Watch</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-binoculars"></i> Things to Watch</h2>
+            <div class="main-section-content collapsed">
                 <ul class="plain">
                     <li><i class="fas fa-ruler"></i><strong>How interactions are counted.</strong> Campaygn records no interactions for stories, so any programme's interaction rate depends on its share of stories. Compare formats, not programme totals.</li>
                     <li><i class="fas fa-eye-slash"></i><strong>Estimated story figures.</strong> Every story's impressions are set at 20% of the creator's followers, its reach at 75% of impressions and its EMV at $0.01 per impression. Stories are 52% of September's Always-On impressions.</li>
@@ -926,8 +939,8 @@
 
         <!-- INCONSISTENCIES -->
         <section class="section">
-            <h2 class="main-section-header"><i class="fas fa-triangle-exclamation"></i> Data Inconsistencies</h2>
-            <div class="main-section-content">
+            <h2 class="main-section-header collapsed"><i class="fas fa-triangle-exclamation"></i> Data Inconsistencies</h2>
+            <div class="main-section-content collapsed">
                 <p class="lead">These figures should be checked with whoever owns the data before they are reused.</p>
 
                 <div class="flagged-market-card">
@@ -1222,6 +1235,21 @@
             });
         })();
         });
+    </script>
+    <script>
+        // Expand or collapse every section from the breadcrumb bar
+        document.querySelectorAll('[data-sections]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const collapse = btn.dataset.sections === 'collapse';
+                document.querySelectorAll('.main-section-header').forEach(h => {
+                    h.classList.toggle('collapsed', collapse);
+                    const c = h.nextElementSibling;
+                    if (c && c.classList.contains('main-section-content')) c.classList.toggle('collapsed', collapse);
+                });
+            });
+        });
+        // Open every section before printing
+        window.addEventListener('beforeprint', () => document.querySelector('[data-sections="expand"]').click());
     </script>
 </body>
 </html>
